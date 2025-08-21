@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saquib's Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="leading-relaxed">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-sm py-4 fixed top-0 left-0 w-full z-50">
+        <nav class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-indigo-700 rounded-md p-2">Saquib.dev</a>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md p-2">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            <ul id="main-nav" class="mobile-menu-hidden md:flex md:space-x-8 text-lg font-medium">
+                <li><a href="#home" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Home</a></li>
+                <li><a href="#about" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">About</a></li>
+                <li><a href="#skills" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Skills</a></li>
+                <li><a href="#experience" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Experience</a></li>
+                <li><a href="#portfolio" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Portfolio</a></li>
+                <li><a href="#contact" class="nav-link text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-75 z-40 hidden">
+        <div class="flex justify-end p-4">
+            <button id="close-menu" class="text-white text-3xl focus:outline-none">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="flex flex-col items-center justify-center h-full text-white text-3xl space-y-8 font-semibold">
+            <li><a href="#home" class="nav-link-mobile" data-section="home">Home</a></li>
+            <li><a href="#about" class="nav-link-mobile" data-section="about">About</a></li>
+            <li><a href="#skills" class="nav-link-mobile" data-section="skills">Skills</a></li>
+            <li><a href="#experience" class="nav-link-mobile" data-section="experience">Experience</a></li>
+            <li><a href="#portfolio" class="nav-link-mobile" data-section="portfolio">Portfolio</a></li>
+            <li><a href="#contact" class="nav-link-mobile" data-section="contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-white py-20 pt-32 md:pt-20">
+        <div class="container mx-auto px-4 text-center">
+            <img src="profile2.jpeg" alt="Saquib's Profile Picture" class="rounded-full w-30 h-36 mx-auto mb-6 border-4 border-white shadow-lg">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-lg"> Hi, I’m Saquib Sarfaraz</h1>
+            <p class="text-2xl md:text-3xl font-light mb-8 max-w-2xl mx-auto drop-shadow-md">
+💻 Web Developer | 🎨 Graphic Designer | 🎯 UI/UX Enthusiast
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#portfolio" class="btn-primary hover:bg-white hover:text-indigo-600 transform hover:scale-105 duration-300">View My Work</a>
+                <a href="#contact" class="btn-secondary bg-white text-indigo-600 hover:bg-indigo-100 transform hover:scale-105 duration-300">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="section-heading text-4xl font-bold mb-8 text-center md:text-left">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center md:space-x-8">
+                <div class="md:w-1/3 mb-8 md:mb-0">
+                    <img src="profile pic.jpeg" alt="About Me Image" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="md:w-2/3 text-lg text-gray-700 leading-relaxed">
+                    <p class="mb-4">
+                        I’m Saquib Sarfaraz, a passionate learner and creative problem-solver with a focus on Web Development, UI/UX Design, and Graphic Designing. Currently pursuing BTech in Computer Science Engineering, I enjoy blending technical skills with design thinking to craft digital experiences that are not only functional but also visually appealing.
+                    </p>
+                    <p class="mb-4">
+                        My development journey began with HTML, CSS, and JavaScript, where I learned to build responsive and interactive websites. Alongside coding, I discovered my creative side in graphic designing with Canva and gradually expanded into UI/UX design with Figma, where I create wireframes, prototypes, and user-friendly interfaces.
+                    </p>
+                    <p>
+                        I believe in the power of design and technology working together. Whether it’s a clean website layout, a thoughtful user experience, or engaging graphics, my goal is to create solutions that leave an impact. I’m constantly learning, experimenting, and exploring new ways to grow as a developer and designer.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-16 md:py-24 bg-gray-50">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <h2 class="section-heading text-4xl font-bold mb-12 text-center">My Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Web Development Skills -->
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-code text-indigo-600 text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Web Development</h3>
+                    <ul class="text-gray-600 text-lg space-y-2">
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> HTML5 & CSS3</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> JavaScript (ES6+)</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Responsive Design</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Git & GitHub</li>
+                    </ul>
+                </div>
+
+                <!-- UI/UX Design Skills -->
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-drafting-compass text-indigo-600 text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">UI/UX Design</h3>
+                    <ul class="text-gray-600 text-lg space-y-2">
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> User Research</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Figma </li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Usability Testing</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Information Architecture</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Interaction Design</li>
+                    </ul>
+                </div>
+
+                <!-- Graphic Design Skills -->
+                <div class="card p-6 flex flex-col items-center text-center">
+                    <i class="fas fa-paint-brush text-indigo-600 text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Graphic Designing</h3>
+                    <ul class="text-gray-600 text-lg space-y-2">
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Adobe Photoshop</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Canva </li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Logo Design</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Branding</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Print Design</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="section-heading text-4xl font-bold mb-12 text-center">Experience</h2>
+            <div class="space-y-12">
+                <!-- Experience Item 1 -->
+                <div class="card p-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-800">Web Developer Intern</h3>
+                            <p class="text-indigo-600 text-xl">Pizeonfly Pvt Ltd.</p>
+                        </div>
+                        <span class="text-gray-500 text-md md:text-lg mt-2 md:mt-0">September 2024 – October 2024</span>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-700 text-lg space-y-2">
+                        <li>Completed a one-month internship focused on web development.</li>
+                        <li>Gained hands-on experience in designing, developing, and deploying web applications.</li>
+                        <li>Collaborated with the team to optimize website functionality and user experience.</li>
+                    </ul>
+                </div>
+                <div class="container mx-auto px-4 max-w-4xl">
+                    <h2 class="section-heading text-4xl font-bold mb-12 text-center">Leadership Roles</h2>
+                <!-- Experience Item 2 -->
+                <div class="card p-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-800">Ignite Society, Hacked, GDSC and UBA, Jamia Hamdard</h3>
+                            <p class="text-indigo-600 text-xl">Part-time</p>
+                        </div>
+                        <span class="text-gray-500 text-md md:text-lg mt-2 md:mt-0">2023 – 2024</span>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-700 text-lg space-y-2">
+                        <li>Served as Joint Secretary of the Ignite Society, overseeing strategic direction, event planning, and
+                            execution.</li>
+                        <li>Actively participated in creative projects and events to foster a collaborative community.</li>
+                        <li>Led initiatives that bridged students with industry professionals.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience Item 3 -->
+                <div class="card p-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-800">Campus Mantri</h3>
+                            <p class="text-indigo-600 text-xl">GeeksforGeeks</p>
+                        </div>
+                        <span class="text-gray-500 text-md md:text-lg mt-2 md:mt-0">2025-2026</span>
+                    </div>
+                    <ul class="list-disc list-inside text-gray-700 text-lg space-y-2">
+                        <li>As a GfG Campus Mantri, I connect students with coding opportunities and inspire collaborative learning.</li>
+                        <li>I foster teamwork, guide peers to resources, and organize impactful coding initiatives.</li>
+                        <li>This role enhances my leadership, empowering others and strengthening Jamia Hamdard’s coding culture.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-16 md:py-24 bg-gray-50">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <h2 class="section-heading text-4xl font-bold mb-12 text-center">My Portfolio</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card overflow-hidden">
+                    <img src="imgp 1.png" alt="Web Project 1" class="w-full h-auto object-cover rounded-t-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2 text-gray-800">Amazon Clone Website (First Project)</h3>
+                        <p class="text-gray-700 mb-4">This was my very first web development project where I created a clone of Amazon’s website using only HTML and CSS. The project gave me hands-on experience in building structured layouts, styling pages, and making them visually appealing.</p>
+                        <div class="flex space-x-2 text-sm text-gray-500 mb-4">
+                            <span>#WebDev</span>
+                            <span>#HTML</span>
+                            <span>#CSS</span>
+                        </div>
+                        <!-- Updated href with your Amazon clone link -->
+                        <a href="https://amazon-clone-five-drab.vercel.app/" class="btn-primary inline-block text-base" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-external-link-alt ml-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="card overflow-hidden">
+                    <img src="TIC TAC TOE.png" alt="UI/UX Case Study" class="w-full h-auto object-cover rounded-t-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2 text-gray-800">Tic Tac Toe Game</h3>
+                        <p class="text-gray-700 mb-4">A simple and interactive Tic Tac Toe game built using HTML, CSS, and JavaScript.
+                            Play against a friend in this classic 2-player game where the first to align three symbols (X or O) wins!.</p>
+                        <div class="flex space-x-2 text-sm text-gray-500 mb-4">
+                            <span>#HTML5</span>
+                            <span>#CSS3</span>
+                            <span>#JavaScript</span>
+                        </div>
+                        <a href="https://tic-tac-toe-game-bay-two.vercel.app/" class="btn-primary inline-block text-base" target="_blank" rel="noopener noreferrer">View Case Study <i class="fas fa-external-link-alt ml-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="card overflow-hidden">
+                    <img src="graphic thumbnail.png" alt="Graphic Design" class="w-full h-auto object-cover rounded-t-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold mb-2 text-gray-800">As a Graphic Designer</h3>
+                        <p class="text-gray-700 mb-4">I bring ideas to life by combining creativity with strategy, turning concepts into visually appealing and impactful designs. My work focuses on creating designs that not only look good but also communicate messages effectively. From digital graphics to branding, I design with purpose—ensuring every color, shape, and element adds value to the overall story.</p>
+                        <div class="flex space-x-2 text-sm text-gray-500 mb-4">
+                            <span>#GraphicDesign</span>
+                            <span>#Branding</span>
+                        </div>
+                        <a href="graphic poster.pdf" class="btn-primary inline-block text-base" target="_blank" rel="noopener noreferrer">View Portfolio <i class="fas fa-external-link-alt ml-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Add more projects as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <h2 class="section-heading text-4xl font-bold mb-12 text-center">Get In Touch</h2>
+            <div class="card p-8 md:p-12">
+                <p class="text-lg text-gray-700 mb-8 text-center">
+                    Have a project in mind or just want to say hello? Feel free to reach out!
+                </p>
+                <form action="https://formspree.io/f/mrblvrzv" method="POST" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-gray-800 text-lg font-medium mb-2">Name</label>
+                        <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-800 text-lg font-medium mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="your.email@example.com" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-gray-800 text-lg font-medium mb-2">Message</label>
+                        <textarea id="message" name="message" rows="6" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Tell me about your project or inquiry..." required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn-primary text-xl px-8 py-3">Send Message</button>
+                    </div>
+                </form>
+            </div>
+            <div class="mt-12 text-center text-gray-700 text-lg">
+                <p class="mb-4">You can also find me on:</p>
+                <div class="flex justify-center space-x-6">
+                    <a href="https://www.linkedin.com/in/saquib-sarfaraz-1691b9292/" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-indigo-600 transition duration-200 text-3xl">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/saquib-sarfaraz" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-indigo-600 transition duration-200 text-3xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:saquibsarfaraz47@gmail.com" class="text-gray-700 hover:text-indigo-600 transition duration-200 text-3xl">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 text-center">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 Saquib's Portfolio. All rights reserved.</p>
+            <p class="mt-2 text-sm text-gray-400">Designed & Developed by Saquib.</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
