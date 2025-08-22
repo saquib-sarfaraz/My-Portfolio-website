@@ -1,75 +1,112 @@
-/* style.css */
+*{
+    padding: 0%;
+    margin: 0%;
+}
+.brand-logo {
+    font-size: 1.5rem;             
+    font-weight: 800;            
+    padding: 0.5rem;              
+    border-radius: 0.5rem;
+    background: linear-gradient(90deg, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: inline-block;
+  }
+  .brand-logo:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #F8FAFC; /* Light off-white background */
-    color: #475569; /* Paragraph text color */
+    background-color: #000000;
+    color: #ffffff; 
 }
-/* Custom scroll behavior for smooth scrolling */
+
 html {
     scroll-behavior: smooth;
 }
+
+.nav-link {
+    color: #064232; 
+    padding: 0.5rem 0.75rem; 
+    border-radius: 0.375rem;
+    transition: color 0.3s ease, background0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: #ffffff; 
+    background: rgba(72, 59, 59, 0.08); 
+  }
+  
 .section-heading {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    background: linear-gradient(90deg,#415E72);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
     position: relative;
     display: inline-block;
-    margin-bottom: 2rem;
-    color: #1E293B; /* Dark text for headings */
-}
-.section-heading::after {
-    content: '';
+    animation: popIn 1s ease;
+  }
+  .section-heading::after {
+    content: "✨";
     position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 50px;
-    height: 4px;
-    background-color: #4F46E5; /* Primary accent indigo underline */
-    border-radius: 9999px;
-}
+    right: -2rem;
+    top: 0.2rem;
+    font-size: 1.5rem;
+    animation: sparkle 2s infinite ease-in-out;
+  }
 .card {
-    background-color: #FFFFFF; /* White card background */
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background: var(--glass);
+    backdrop-filter: blur(16px) saturate(180%);
+    border-radius: 1.2rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 2rem;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 0 30px #064232;
+  }
 .nav-link:hover {
-    color: #4F46E5; /* Primary accent indigo on hover */
+    color: #064232; 
 }
 .btn-primary {
-    background-color: #4F46E5; /* Primary accent indigo button */
+    background-color: #064232; 
     color: white;
     padding: 0.75rem 1.5rem;
     border-radius: 9999px;
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 }
 .btn-primary:hover {
-    background-color: #3F37C7; /* Darker indigo on hover */
+    background-color: #568F87; 
     transform: translateY(-2px);
 }
 .btn-secondary {
-    background-color: #E0E7FF; /* Light indigo button (from Tailwind's indigo-100) */
-    color: #4F46E5; /* Primary accent text */
+    background-color: #E0E7FF;
+    color: #568F87; 
     padding: 0.75rem 1.5rem;
     border-radius: 9999px;
-    border: 1px solid #C7D2FE; /* Indigo-200 border */
+    border: 1px solid #C7D2FE; 
     transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 }
 .btn-secondary:hover {
-    background-color: #C7D2FE; /* Lighter indigo on hover */
+    background-color: #C7D2FE; 
     transform: translateY(-2px);
 }
-/* Hero section background pattern */
+
 .hero-bg {
-    background-color: #4F46E5; /* Main hero background */
-    background-image: radial-gradient(at 0% 0%, hsl(240, 60%, 80%) 0, transparent 50%),
-                      radial-gradient(at 100% 100%, hsl(260, 80%, 70%) 0, transparent 50%);
+    background-color: #568F87; 
+    background-image: radial-gradient(at 0% 0%, hsl(0, 0%, 0%) 0, transparent 50%),
+                      radial-gradient(at 100% 100%, hsl(196, 45%, 22%) 0, transparent 50%);
 }
 @media (max-width: 768px) {
     .mobile-menu-hidden {
         display: none;
     }
 }
-
