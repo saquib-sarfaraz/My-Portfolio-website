@@ -1,78 +1,30 @@
-// script.js
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                // Get header height to offset scroll position
-                const header = document.querySelector('header');
-                const headerHeight = header ? header.offsetHeight : 0;
-
-                window.scrollTo({
-                    top: targetElement.offsetTop - headerHeight - 20, // Add a small extra margin
-                    behavior: 'smooth'
-                });
-
-                // Close mobile menu if open
-                if (mobileMenuOverlay.classList.contains('flex')) {
-                    mobileMenuOverlay.classList.remove('flex');
-                    mobileMenuOverlay.classList.add('hidden');
-                    document.body.style.overflow = ''; // Re-enable scrolling
-                }
-            }
-        });
-    });
-
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-    const closeMenu = document.getElementById('close-menu');
-    const mainNav = document.getElementById('main-nav');
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            mobileMenuOverlay.classList.remove('hidden');
-            mobileMenuOverlay.classList.add('flex');
-            document.body.style.overflow = 'hidden'; // Disable scrolling on body
-        });
+document.addEventListener("DOMContentLoaded", function () {
+    const themeToggle = document.getElementById("theme-toggle");
+  
+    if (!themeToggle) {
+      console.error("Theme toggle button not found!");
+      return;
     }
-
-    if (closeMenu) {
-        closeMenu.addEventListener('click', () => {
-            mobileMenuOverlay.classList.remove('flex');
-            mobileMenuOverlay.classList.add('hidden');
-            document.body.style.overflow = ''; // Re-enable scrolling
-        });
+  
+    // Load saved theme
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light-mode");
+      themeToggle.textContent = "🌙 Dark Mode";
+    } else {
+      themeToggle.textContent = "🌙 Light Mode";
     }
-
-
-    // Close mobile menu when a nav link is clicked (inside the overlay)
-    document.querySelectorAll('.nav-link-mobile').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenuOverlay.classList.remove('flex');
-            mobileMenuOverlay.classList.add('hidden');
-            document.body.style.overflow = ''; // Re-enable scrolling
-        });
+  
+    // Toggle theme on click
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+  
+      if (document.body.classList.contains("light-mode")) {
+        localStorage.setItem("theme", "light");
+        themeToggle.textContent = "🌙 Dark Mode";
+      } else {
+        localStorage.setItem("theme", "dark");
+        themeToggle.textContent = "🌙 Light Mode";
+      }
     });
-
-    // Handle responsiveness for desktop nav
-    const adjustNavDisplay = () => {
-        if (window.innerWidth >= 768) {
-            mainNav.classList.remove('mobile-menu-hidden');
-            mobileMenuOverlay.classList.remove('flex');
-            mobileMenuOverlay.classList.add('hidden');
-            document.body.style.overflow = '';
-        } else {
-            mainNav.classList.add('mobile-menu-hidden');
-        }
-    };
-
-    window.addEventListener('resize', adjustNavDisplay);
-    adjustNavDisplay(); // Initial check on load
-});
+  });
+  

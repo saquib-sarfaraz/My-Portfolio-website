@@ -18,9 +18,11 @@
     opacity: 0.9;
   }
 
+  
+
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #000000;
+    background-color: #ffffff;
     color: #ffffff; 
 }
 
@@ -94,8 +96,8 @@ html {
     transform: translateY(-2px);
 }
 .btn-secondary {
-    background-color: #fffbfb;
-    color: #568F87; 
+    background-color: #568F87;
+    color: #feffff; 
     padding: 0.75rem 1.5rem;
     border-radius: 9999px;
     border: 1px solid #C7D2FE; 
@@ -158,8 +160,8 @@ html {
   
  
   .btn-primary {
-    background-color: #568F87; 
-    color: rgb(0, 0, 0);
+    background-color: #51a294; 
+    color: rgb(255, 252, 252);
     font-size: 1.25rem; 
     padding: 0.75rem 2rem; 
     border-radius: 0.5rem;
@@ -191,4 +193,57 @@ html {
   .social-link:hover {
     color: #568F87;          
   }
-  
+
+  .theme-btn {
+    position: fixed;
+    top: 6rem;
+    right: 1rem;
+    background-color: #667f7c;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000; /* keeps it above */
+  }
+  /* 🌞 Light Mode */
+.light-mode {
+  background-color: #f9fafb !important;
+  color: #111827 !important;
+}
+
+/* Navbar links */
+.light-mode .nav-link {
+  color: #064232 !important;
+}
+
+/* Cards */
+.light-mode .card {
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  color: #111827 !important;
+}
+
+/* Buttons */
+.light-mode .btn-primary {
+  background-color: #064232 !important;
+  color: #ffffff !important;
+}
+.light-mode .btn-secondary {
+  background-color: #064232 !important;
+  color: #ffffff !important;
+  border: 1px solid #064232 !important;
+}
+
+/* Contact Form */
+.light-mode .form-label {
+  color: #111827 !important;
+}
+.light-mode .form-input {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid #d1d5db !important;
+}
+
