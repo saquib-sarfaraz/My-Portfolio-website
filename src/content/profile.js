@@ -11,7 +11,7 @@ export const profileData = {
   bio: `I am a Full Stack Developer specializing in product engineering, scalable web platforms, and thoughtful user experiences. Currently pursuing B.Tech in Computer Science Engineering at Jamia Hamdard, I build end-to-end web applications, real-time systems, and interactive learning tools.`,
   resumeUrl: "/saquib-cv.pdf",
   socials: {
-    github: "https://github.com/saquib-sarfaraz?tab=repositories",
+    github: "https://github.com/saquib-sarfaraz/saquib-sarfaraz-1",
     linkedin: "https://www.linkedin.com/in/saquib-sarfaraz-1691b9292/",
     instagram: "https://www.instagram.com/saquib.sarfaraz?igsh=MTB0ZWdlbWZnMTQ1dA==",
     email: "saquibsarfaraz47@gmail.com",
