@@ -16,10 +16,10 @@ export default function ProjectCard({
 }) {
   const revealRef = useReveal()
 
-  const cardClassName = `glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 group reveal ${delayClass}`.trim()
+  const cardClassName = `glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 group reveal hover-card ${delayClass}`.trim()
 
   return (
-    <article ref={revealRef} className={cardClassName}>
+    <article ref={revealRef} data-cursor-label="OPEN →" className={cardClassName}>
       {header?.type === 'gradient' ? (
         <div
           className={`h-44 rounded-2xl ${header.gradientClassName} mb-6 overflow-hidden relative`}

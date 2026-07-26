@@ -44,10 +44,9 @@ export default function Contact() {
     } catch (err) {
       console.error('Formspree Send Error:', err);
       setErrorMsg('Unable to send message via Formspree. Please try again or email directly.');
-    } fontally: {
-      // Handled in try/catch finally block
+    } finally {
+      setIsSending(false);
     }
-    setIsSending(false);
   };
 
   return (
@@ -81,7 +80,7 @@ export default function Contact() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Alex Morgan"
+                  placeholder="e.g. Saquib Sarfaraz"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-400 focus:outline-none focus:border-sky-400 transition-colors"
@@ -93,7 +92,7 @@ export default function Contact() {
                 <input
                   type="email"
                   required
-                  placeholder="alex@company.com"
+                  placeholder="saquib@company.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-400 focus:outline-none focus:border-sky-400 transition-colors"
