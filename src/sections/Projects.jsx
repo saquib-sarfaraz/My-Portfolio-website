@@ -1,295 +1,272 @@
-import ProjectCard from '../components/ProjectCard'
-import amazonCloneImg from '../assets/amazon-clone.png'
-import graphicThumbnailImg from '../assets/graphic-thumbnail.png'
-import ticTacToeImg from '../assets/tic-tac-toe.png'
-import { useReveal } from '../hooks/useReveal'
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink, ArrowUpRight, Code2, Server, Terminal } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa6';
+import ProjectModal from '../components/ProjectModal';
+import { flagshipProject, ecosystemProjects, learningProjects } from '../content/projects';
 
 export default function Projects() {
-  const titleRevealRef = useReveal()
-
-  const projects = [
-    {
-      key: 'incampus',
-      variant: 'detailed',
-      header: {
-        type: 'gradient',
-        gradientClassName: 'bg-gradient-to-br from-holoCyan/20 via-void to-gray-900',
-        overlayClassName: 'bg-holoCyan/10',
-        blobClassName:
-          'absolute -top-10 -right-10 w-40 h-40 bg-holoCyan/20 blur-3xl rounded-full',
-        eyebrowClassName: 'text-holoCyan/80',
-        eyebrow: 'Full Stack SaaS',
-        name: 'InCampus',
-        subtitle: 'Private Campus Social Network',
-        statusLabel: 'Live',
-        statusClassName:
-          'text-[10px] px-2 py-1 rounded-full border border-holoCyan/30 text-holoCyan',
-      },
-      title: 'InCampus',
-      action: {
-        type: 'link',
-        href: 'https://incampus.online',
-        ariaLabel: 'Visit InCampus',
-        hoverClassName: 'hover:bg-holoCyan hover:text-void',
-      },
-      description:
-        'A university-exclusive social platform with real-time communication, campus-based feeds, and moderation built for trusted community interaction.',
-      features: [
-        'Google OAuth + JWT authentication',
-        'College-based dynamic feeds with Universal/My College modes',
-        'Real-time 1–1 messaging with Socket.io',
-        'Report + temporary hide moderation system',
-      ],
-      techStack: [
-        'React',
-        'Node.js',
-        'Express',
-        'MongoDB Atlas',
-        'Socket.io',
-        'Cloudinary',
-        'Vercel',
-        'Render',
-      ],
-      impact: [
-        'Designed scalable feed architecture and engagement-weighted ranking',
-        'Implemented real-time messaging and moderation burst logic',
-      ],
-    },
-    {
-      key: 'incampus-help',
-      variant: 'detailed',
-      delayClass: 'delay-100',
-      header: {
-        type: 'gradient',
-        gradientClassName: 'bg-gradient-to-br from-white/10 via-void to-gray-900',
-        overlayClassName: 'bg-white/5',
-        blobClassName:
-          'absolute -bottom-12 -left-12 w-40 h-40 bg-white/10 blur-3xl rounded-full',
-        eyebrowClassName: 'text-gray-300',
-        eyebrow: 'SaaS Support',
-        name: 'InCampus Help',
-        subtitle: 'Verification & Support Portal',
-        statusLabel: 'Live',
-        statusClassName:
-          'text-[10px] px-2 py-1 rounded-full border border-white/20 text-gray-300',
-      },
-      title: 'InCampus Help',
-      action: {
-        type: 'link',
-        href: 'https://incampus-help.online',
-        ariaLabel: 'Visit InCampus Help',
-        hoverClassName: 'hover:bg-white hover:text-void',
-      },
-      description:
-        'A dedicated SaaS-style support and verification portal that centralizes help, feedback, blue tick requests, and transparency resources.',
-      features: [
-        'Contact support and feedback submission workflows',
-        'Blue Tick verification via Google Forms integration',
-        'FAQ, featured topics, and legal documentation',
-        'Moderation transparency and developer contribution sections',
-      ],
-      techStack: ['React', 'Node.js', 'MongoDB', 'Google Forms', 'Netlify'],
-      impact: [
-        'Structured verification review process and trust transparency',
-        'Centralized communication for platform users',
-      ],
-    },
-    {
-      key: 'college-search-api',
-      variant: 'detailed',
-      delayClass: 'delay-200',
-      header: {
-        type: 'gradient',
-        gradientClassName:
-          'bg-gradient-to-br from-emerald-400/10 via-void to-gray-900',
-        overlayClassName: 'bg-emerald-400/10',
-        blobClassName:
-          'absolute -top-10 -left-10 w-40 h-40 bg-emerald-400/10 blur-3xl rounded-full',
-        eyebrowClassName: 'text-emerald-300',
-        eyebrow: 'Backend Service',
-        name: 'College Search API',
-        subtitle: 'University Lookup Microservice',
-        statusLabel: 'Private',
-        statusClassName:
-          'text-[10px] px-2 py-1 rounded-full border border-white/10 text-gray-400',
-      },
-      title: 'College Search API',
-      action: { type: 'tag', text: 'Backend' },
-      description:
-        'A RESTful microservice powering dynamic college search and autocomplete during onboarding and filtering.',
-      descriptionClassName: 'text-gray-400 text-sm mb-2',
-      note: 'Private API, tested through the InCampus frontend.',
-      features: [
-        'Prefix-based search with indexed queries',
-        'Country-based filtering and fallback input support',
-        'Auto college-group integration for onboarding',
-        'Optimized for low-latency lookup at scale',
-      ],
-      techStack: ['Node.js', 'Express', 'MongoDB'],
-      impact: [
-        'Reduced registration friction with autocomplete',
-        'Enabled dynamic campus-based grouping',
-      ],
-    },
-    {
-      key: 'campus-chat-engine',
-      variant: 'detailed',
-      delayClass: 'delay-300',
-      header: {
-        type: 'gradient',
-        gradientClassName:
-          'bg-gradient-to-br from-neonViolet/20 via-void to-gray-900',
-        overlayClassName: 'bg-neonViolet/10',
-        blobClassName:
-          'absolute -bottom-12 -right-12 w-40 h-40 bg-neonViolet/20 blur-3xl rounded-full',
-        eyebrowClassName: 'text-neonViolet',
-        eyebrow: 'Real-Time Engine',
-        name: 'Campus Chat Engine',
-        subtitle: 'Messaging Architecture',
-        statusLabel: 'Private',
-        statusClassName:
-          'text-[10px] px-2 py-1 rounded-full border border-white/10 text-gray-400',
-      },
-      title: 'Real-Time Campus Chat Engine',
-      action: { type: 'tag', text: 'Backend' },
-      description:
-        'A scalable real-time messaging system with presence, unread tracking, and auto-clean storage for campus communities.',
-      descriptionClassName: 'text-gray-400 text-sm mb-2',
-      note: 'Private backend, demonstrated through InCampus chat.',
-      features: [
-        '1–1 chat with friend-request unlock flow',
-        'College group + global group messaging',
-        'Online presence, unread counts, and notifications',
-        'Auto-delete messages after 24 hours',
-      ],
-      techStack: ['Socket.io', 'Node.js', 'MongoDB', 'React'],
-      impact: [
-        'Event-driven architecture with optimized message storage',
-        'WhatsApp-like UX performance on mobile',
-      ],
-    },
-    {
-      key: 'xyxo',
-      variant: 'detailed',
-      delayClass: 'delay-400',
-      header: {
-        type: 'gradient',
-        gradientClassName:
-          'bg-gradient-to-br from-electricBlue/20 via-void to-gray-900',
-        overlayClassName: 'bg-electricBlue/10',
-        blobClassName:
-          'absolute -top-10 -left-10 w-40 h-40 bg-electricBlue/20 blur-3xl rounded-full',
-        eyebrowClassName: 'text-electricBlue/80',
-        eyebrow: 'Real-Time Multiplayer',
-        name: 'XYXO',
-        subtitle: 'Multiplayer Tic-Tac-Toe',
-        statusLabel: 'Live',
-        statusClassName:
-          'text-[10px] px-2 py-1 rounded-full border border-electricBlue/30 text-electricBlue',
-      },
-      title: 'XYXO',
-      action: {
-        type: 'link',
-        href: 'https://xyxo.vercel.app/',
-        ariaLabel: 'Visit XYXO',
-        hoverClassName: 'hover:bg-electricBlue hover:text-void',
-      },
-      description:
-        'XYXO is a real-time multiplayer web-based game that reimagines Tic-Tac-Toe with socket-based synchronization, room-based matchmaking, and robust session handling.',
-      features: [
-        'Socket-based real-time move synchronization',
-        'Room-based matchmaking and session management',
-        'Accurate turn handling with win/draw detection',
-        'Automatic match restart',
-        'Basic AI mode for solo play',
-        'Gameplay statistics for replayability',
-      ],
-      impact: [
-        'Responsive and mobile-friendly UI across devices',
-        'Lightweight multiplayer architecture designed for low-latency gameplay',
-      ],
-    },
-    {
-      key: 'amazon-clone',
-      variant: 'compact',
-      delayClass: 'delay-500',
-      header: {
-        type: 'image',
-        overlayClassName: 'bg-holoCyan/10',
-        imageSrc: amazonCloneImg,
-        imageAlt: 'view wmy work',
-      },
-      title: 'Amazon Clone',
-      action: {
-        type: 'link',
-        href: 'https://amazon-clone-five-drab.vercel.app/',
-        ariaLabel: 'Visit Amazon Clone',
-        hoverClassName: 'hover:bg-holoCyan hover:text-void',
-      },
-      description:
-        'A pixel-accurate, responsive Amazon-style storefront built with semantic HTML and modern CSS layouts.',
-      tags: ['HTML', 'CSS'],
-    },
-    {
-      key: 'tic-tac-toe',
-      variant: 'compact',
-      delayClass: 'delay-600',
-      header: {
-        type: 'image',
-        overlayClassName: 'bg-neonViolet/10',
-        imageSrc: ticTacToeImg,
-        imageAlt: 'view wmy work',
-      },
-      title: 'Tic Tac Toe',
-      action: {
-        type: 'link',
-        href: 'https://tic-tac-toe-game-bay-two.vercel.app/',
-        ariaLabel: 'Visit Tic Tac Toe',
-        hoverClassName: 'hover:bg-neonViolet hover:text-void',
-      },
-      description:
-        'A clean, interactive Tic Tac Toe game with win detection and smooth UI feedback powered by vanilla JavaScript.',
-      tags: ['HTML', 'CSS', 'JavaScript'],
-    },
-    {
-      key: 'graphic-portfolio',
-      variant: 'compact',
-      delayClass: 'delay-700',
-      header: {
-        type: 'image',
-        overlayClassName: 'bg-pink-500/10',
-        imageSrc: graphicThumbnailImg,
-        imageAlt: 'view wmy work',
-      },
-      title: 'Graphic Portfolio',
-      action: {
-        type: 'link',
-        href: '/graphic-poster.pdf',
-        ariaLabel: 'View Graphic Portfolio PDF',
-        hoverClassName: 'hover:bg-pink-400 hover:text-void',
-      },
-      description: 'A showcase of brand identity and social media typography designs.',
-      tags: ['Design', 'Branding'],
-    },
-  ]
+  const [activeModalProject, setActiveModalProject] = useState(null);
 
   return (
-    <section id="projects" className="py-20 px-6">
-      <div className="max-w-6xl mx-auto">
-        <h2
-          ref={titleRevealRef}
-          className="font-display text-3xl md:text-4xl font-bold mb-12 text-center reveal"
-        >
-          Selected <span className="text-holoCyan">Work</span>
-        </h2>
+    <section id="projects" className="py-24 px-4 sm:px-6 relative bg-[#10182C] overflow-hidden">
+      {/* Volumetric Radial Glows */}
+      <div className="absolute top-1/4 right-0 w-[550px] h-[550px] rounded-full radial-glow-cyan blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-10 left-0 w-[500px] h-[500px] rounded-full radial-glow-purple blur-[140px] pointer-events-none" />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => {
-            const { key, ...rest } = project
-            return <ProjectCard key={key} {...rest} />
-          })}
+      <div className="max-w-5xl mx-auto space-y-16 text-left relative z-10">
+        {/* Section Header */}
+        <div className="text-center space-y-2">
+          <span className="text-xs font-mono uppercase tracking-widest text-sky-400 font-bold px-3 py-1 rounded-full bg-white/10 border border-white/15 inline-block shadow-sm">
+            Engineered SaaS Systems
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Flagship Product & Infrastructure
+          </h2>
+          <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto font-mono">
+            Architected around the InCampus SaaS ecosystem and real-time multiplayer engines.
+          </p>
+        </div>
+
+        {/* Flagship Product Showcase: InCampus */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="p-8 md:p-10 rounded-3xl glass-card border-2 border-sky-400/50 space-y-8 shadow-[0_20px_60px_rgba(56,189,248,0.25)] relative overflow-hidden"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-6">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-3 py-0.5 rounded bg-sky-500/20 border border-sky-400/40 text-sky-300">
+                  {flagshipProject.eyebrow}
+                </span>
+                <span className="text-[11px] font-mono text-emerald-300 px-3 py-0.5 rounded bg-emerald-500/20 border border-emerald-400/40 font-bold">
+                  {flagshipProject.status}
+                </span>
+              </div>
+              <h3 className="text-3xl sm:text-4xl font-extrabold text-white pt-1">{flagshipProject.title}</h3>
+              <p className="text-slate-200 text-sm font-mono font-medium">{flagshipProject.subtitle}</p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              {flagshipProject.demoUrl && (
+                <a
+                  href={flagshipProject.demoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-6 py-3 rounded-full bg-white text-black font-extrabold text-xs hover:bg-slate-200 transition-all flex items-center gap-1.5 shadow-lg"
+                >
+                  <span>Launch Live Platform</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* Editorial Case Study Grid */}
+          <div className="grid md:grid-cols-2 gap-8 text-sm">
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-xs font-mono uppercase tracking-wider text-sky-400 font-bold mb-1">
+                  Product Overview
+                </h4>
+                <p className="text-slate-100 leading-relaxed font-medium">
+                  {flagshipProject.overview}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-xs font-mono uppercase tracking-wider text-sky-400 font-bold mb-1">
+                  Core Engineering Challenge
+                </h4>
+                <p className="text-slate-200 leading-relaxed text-xs">
+                  {flagshipProject.challenge}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-xs font-mono uppercase tracking-wider text-sky-400 font-bold mb-1">
+                  Architecture & Implementation
+                </h4>
+                <p className="text-slate-100 leading-relaxed text-xs">
+                  {flagshipProject.approach}
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-sky-400 font-bold mb-2">
+                System Modules & Impact
+              </h4>
+
+              <div className="space-y-2.5">
+                {flagshipProject.architecture.map((arch, i) => (
+                  <div key={i} className="p-3.5 rounded-xl bg-white/10 border border-white/15 text-xs text-white font-medium shadow-sm">
+                    {arch}
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-2 flex flex-wrap gap-1.5">
+                {flagshipProject.tags.map((tag) => (
+                  <span key={tag} className="px-3 py-1 rounded-lg bg-white/10 border border-white/15 text-[11px] font-mono text-white font-medium">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="pt-2">
+                <button
+                  onClick={() => setActiveModalProject(flagshipProject)}
+                  className="text-xs font-mono text-sky-300 underline hover:text-white transition-colors flex items-center gap-1 font-bold"
+                >
+                  <span>View Full InCampus Architecture Specification</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Ecosystem & Services Grid */}
+        <div className="space-y-6">
+          <h3 className="text-lg font-extrabold text-white font-mono uppercase tracking-wider border-l-4 border-sky-400 pl-3">
+            InCampus Ecosystem & Real-Time Infrastructure
+          </h3>
+
+          <div className="grid sm:grid-cols-2 gap-6">
+            {ecosystemProjects.map((project, idx) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="p-7 rounded-2xl glass-card glass-card-hover flex flex-col justify-between space-y-6"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-sky-300 px-2.5 py-0.5 rounded bg-sky-500/20 border border-sky-400/40 font-extrabold">
+                      {project.category}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-300 font-semibold">
+                      {project.status}
+                    </span>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h4 className="text-xl font-extrabold text-white">
+                      {project.title}
+                    </h4>
+                    <p className="text-xs font-mono text-slate-200 font-medium">
+                      {project.subtitle}
+                    </p>
+                  </div>
+
+                  <p className="text-slate-200 text-xs leading-relaxed font-normal">
+                    {project.overview}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-0.5 rounded-md bg-white/10 border border-white/15 text-[10px] font-mono text-white font-medium"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="pt-4 border-t border-white/15 flex items-center justify-between text-xs font-mono">
+                  <button
+                    onClick={() => setActiveModalProject(project)}
+                    className="text-sky-300 hover:text-white font-bold flex items-center gap-1"
+                  >
+                    <span>Inspect System Case Study</span>
+                    <span>→</span>
+                  </button>
+
+                  <div className="flex items-center gap-2">
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+                        aria-label="GitHub Repo"
+                      >
+                        <FaGithub className="w-4 h-4" />
+                      </a>
+                    )}
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+                        aria-label="Live Demo"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Learning Projects Subsection */}
+        <div className="space-y-4 pt-6 border-t border-white/15">
+          <h3 className="text-sm font-bold text-slate-200 font-mono uppercase tracking-wider">
+            Learning Projects & UI Exercises
+          </h3>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            {learningProjects.map((lp) => (
+              <div
+                key={lp.id}
+                className="p-4 rounded-xl glass-card flex items-center justify-between gap-4"
+              >
+                <div className="space-y-1">
+                  <div className="text-sm font-bold text-white">{lp.title}</div>
+                  <div className="text-xs text-slate-200 font-medium">{lp.subtitle}</div>
+                  <div className="flex flex-wrap gap-1 pt-1">
+                    {lp.tags.map((t) => (
+                      <span key={t} className="text-[10px] font-mono text-white bg-white/10 border border-white/15 px-2 py-0.5 rounded">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href={lp.demoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-2.5 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* Case Study Modal Popup */}
+      <ProjectModal
+        project={activeModalProject}
+        isOpen={!!activeModalProject}
+        onClose={() => setActiveModalProject(null)}
+      />
     </section>
-  )
+  );
 }

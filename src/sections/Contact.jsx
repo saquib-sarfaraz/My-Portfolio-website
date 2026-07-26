@@ -1,91 +1,161 @@
-import { useReveal } from '../hooks/useReveal'
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Mail, Send, CheckCircle2, MapPin, Sparkles, Loader2, AlertCircle } from 'lucide-react';
+import RecruiterDashboard from '../components/RecruiterDashboard';
+import { profileData } from '../content/profile';
 
 export default function Contact() {
-  const revealRef = useReveal()
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [isSending, setIsSending] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    setIsSending(true);
+    setErrorMsg('');
+
+    try {
+      const response = await fetch("https://formspree.io/f/mgograry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || 'Portfolio Direct Message',
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 5000);
+      } else {
+        throw new Error('Formspree response error');
+      }
+    } catch (err) {
+      console.error('Formspree Send Error:', err);
+      setErrorMsg('Unable to send message via Formspree. Please try again or email directly.');
+    } fontally: {
+      // Handled in try/catch finally block
+    }
+    setIsSending(false);
+  };
 
   return (
-    <section id="contact" className="py-20 px-6 pb-32">
-      <div ref={revealRef} className="max-w-3xl mx-auto text-center reveal">
-        <h2 className="font-display text-4xl font-bold mb-8">
-          Ready to <span className="text-holoCyan">Collaborate?</span>
-        </h2>
+    <section id="contact" className="py-24 px-4 sm:px-6 relative bg-[#0B1020] overflow-hidden text-left">
+      {/* Radial Glow Blobs */}
+      <div className="absolute top-1/3 left-10 w-[500px] h-[500px] rounded-full radial-glow-cyan blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[550px] h-[550px] rounded-full radial-glow-purple blur-[140px] pointer-events-none" />
 
-        <form
-          action="https://formspree.io/f/mrblvrzv"
-          method="POST"
-          className="glass-panel rounded-[30px] p-8 md:p-12 text-left space-y-6"
-        >
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-xs text-gray-500 uppercase tracking-widest ml-2">
-                Name
-              </label>
+      <div className="max-w-5xl mx-auto space-y-16 relative z-10">
+        {/* Recruiter Dashboard */}
+        <RecruiterDashboard />
+
+        {/* Contact Form & Messaging Card */}
+        <div className="max-w-4xl mx-auto p-8 sm:p-10 rounded-3xl glass-card border border-white/20 space-y-8 shadow-[0_20px_60px_rgba(56,189,248,0.2)]">
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/10 text-sky-400 text-xs font-mono uppercase tracking-widest border border-white/15 shadow-sm">
+              <Mail className="w-4 h-4 text-sky-400" /> Direct Channel
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Let's Build Something Together
+            </h2>
+            <p className="text-slate-200 text-sm max-w-md mx-auto font-mono">
+              Open for full stack roles, technical projects, and engineering collaborations.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4 max-w-xl mx-auto font-mono text-xs">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-slate-300 font-bold uppercase text-[10px]">Your Name</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Alex Morgan"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-400 focus:outline-none focus:border-sky-400 transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-slate-300 font-bold uppercase text-[10px]">Your Email</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="alex@company.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-400 focus:outline-none focus:border-sky-400 transition-colors"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-slate-300 font-bold uppercase text-[10px]">Subject (Optional)</label>
               <input
                 type="text"
-                name="name"
-                required
-                className="w-full bg-void/50 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-holoCyan/50 focus:shadow-neon transition-all"
-                placeholder="Enter name"
+                placeholder="e.g. Job Opportunity / Collaboration"
+                value={formData.subject}
+                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-400 focus:outline-none focus:border-sky-400 transition-colors"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs text-gray-500 uppercase tracking-widest ml-2">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
+            <div className="space-y-1">
+              <label className="text-slate-300 font-bold uppercase text-[10px]">Message</label>
+              <textarea
+                rows={4}
                 required
-                className="w-full bg-void/50 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-holoCyan/50 focus:shadow-neon transition-all"
-                placeholder="Enter email"
+                placeholder="Share project details, job opportunity, or inquiry..."
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-400 focus:outline-none focus:border-sky-400 transition-colors leading-relaxed"
               />
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <label className="text-xs text-gray-500 uppercase tracking-widest ml-2">
-              Message
-            </label>
-            <textarea
-              name="message"
-              rows={4}
-              required
-              className="w-full bg-void/50 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-holoCyan/50 focus:shadow-neon transition-all"
-              placeholder="How can I help you?"
-            ></textarea>
-          </div>
+            {errorMsg && (
+              <div className="p-3 rounded-xl bg-rose-500/20 border border-rose-400/40 text-rose-300 flex items-center gap-2 text-xs">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
 
-          <button
-            type="submit"
-            className="w-full py-4 rounded-xl bg-gradient-to-r from-holoCyan to-electricBlue text-white font-bold text-lg hover:shadow-neon transition-all transform hover:-translate-y-1"
-          >
-            Send Transmission
-          </button>
-        </form>
-
-        <div className="mt-12 flex justify-center gap-6 text-gray-400">
-          <a
-            href="https://www.linkedin.com/in/saquib-sarfaraz-1691b9292/"
-            className="hover:text-holoCyan transition-colors"
-          >
-            <i className="fab fa-linkedin text-2xl"></i>
-          </a>
-          <a
-            href="https://github.com/saquib-sarfaraz?tab=repositories"
-            className="hover:text-white transition-colors"
-          >
-            <i className="fab fa-github text-2xl"></i>
-          </a>
-          <a
-            href="https://www.instagram.com/saquib.sarfaraz?igsh=MTB0ZWdlbWZnMTQ1dA=="
-            className="hover:text-blue-400 transition-colors"
-          >
-            <i className="fab fa-instagram text-2xl"></i>
-          </a>
+            <button
+              type="submit"
+              disabled={isSending}
+              className="w-full py-3.5 rounded-xl bg-white text-black font-extrabold text-xs hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
+            >
+              {isSending ? (
+                <>
+                  <Loader2 className="w-4 h-4 text-black animate-spin" />
+                  <span>Sending Message...</span>
+                </>
+              ) : submitted ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <span>Message Delivered Successfully!</span>
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4 text-black" />
+                  <span>Send Direct Message</span>
+                </>
+              )}
+            </button>
+          </form>
         </div>
       </div>
     </section>
-  )
+  );
 }
-
