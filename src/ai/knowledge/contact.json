@@ -2,7 +2,7 @@
   "email": "saquibsarfaraz47@gmail.com",
   "location": "New Delhi, India",
   "socials": {
-    "github": "https://github.com/saquib-sarfaraz/saquib-sarfaraz-1",
+    "github": "https://github.com/saquib-sarfaraz",
     "linkedin": "https://www.linkedin.com/in/saquib-sarfaraz-1691b9292/",
     "instagram": "https://www.instagram.com/saquib.sarfaraz?igsh=MTB0ZWdlbWZnMTQ1dA=="
   },
@@ -11,7 +11,7 @@
     { "type": "scroll", "target": "contact", "label": "Go to Contact Form" },
     { "type": "resume", "url": "/saquib-cv.pdf", "label": "Download Resume PDF" },
     { "type": "external", "url": "mailto:saquibsarfaraz47@gmail.com", "label": "Send Direct Email" },
-    { "type": "external", "url": "https://github.com/saquib-sarfaraz/saquib-sarfaraz-1", "label": "Open GitHub" },
+    { "type": "external", "url": "https://github.com/saquib-sarfaraz", "label": "Open GitHub" },
     { "type": "external", "url": "https://www.linkedin.com/in/saquib-sarfaraz-1691b9292/", "label": "Open LinkedIn" }
   ]
 }
