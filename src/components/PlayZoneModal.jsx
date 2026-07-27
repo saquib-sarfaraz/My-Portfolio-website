@@ -131,7 +131,10 @@ export default function PlayZoneModal({ isOpen, onClose }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/80 backdrop-blur-2xl overflow-hidden text-left font-sans safe-area-inset">
+      <div
+        data-lenis-prevent
+        className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/80 backdrop-blur-2xl overflow-y-auto text-left font-sans safe-area-inset"
+      >
         
         {/* Main OS Window Container */}
         <motion.div
@@ -140,7 +143,7 @@ export default function PlayZoneModal({ isOpen, onClose }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className={`relative w-full max-w-5xl h-[90vh] max-h-[850px] rounded-3xl bg-[#090D1E]/95 border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.9)] flex flex-col justify-between overflow-hidden transition-all duration-300 ${
+          className={`relative w-full max-w-5xl h-[92vh] sm:h-[90vh] max-h-[850px] rounded-3xl bg-[#090D1E]/95 border border-white/20 shadow-[0_30px_90px_rgba(0,0,0,0.9)] flex flex-col justify-between overflow-hidden transition-all duration-300 ${
             isFullscreen ? 'max-w-none max-h-none h-full rounded-none border-none' : ''
           }`}
         >
@@ -224,8 +227,11 @@ export default function PlayZoneModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* OS Window Body — Independent Vertical Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-3 sm:p-8 space-y-6 scrollbar-none">
+          {/* OS Window Body — Independent Vertical Scroll Area with Lenis Scroll Lock Isolation */}
+          <div
+            data-lenis-prevent
+            className="flex-1 overflow-y-auto overscroll-contain p-3 sm:p-8 space-y-6 scrollbar-none"
+          >
             
             {/* VIEW A: ARCADE SELECTION GRID */}
             {!selectedGame ? (
