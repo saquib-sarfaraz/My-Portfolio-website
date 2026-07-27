@@ -39,7 +39,7 @@ export default function SocialProof() {
           </h2>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-left">
           {proofs.map((p, idx) => (
             <motion.div
               key={p.title}
@@ -47,20 +47,22 @@ export default function SocialProof() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="p-5 rounded-2xl bg-[#111111] border border-zinc-800 space-y-2 relative group hover:border-zinc-700 transition-all"
+              className="p-4 sm:p-5 rounded-2xl bg-[#111111] border border-zinc-800 space-y-2 relative group hover:border-zinc-700 transition-all flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-zinc-800 text-zinc-300">
-                  {p.badge}
-                </span>
-                <ShieldCheck className="w-4 h-4 text-zinc-400" />
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300">
+                    {p.badge}
+                  </span>
+                  <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-400 shrink-0" />
+                </div>
+                <div className="text-xs sm:text-sm font-bold text-white leading-snug">
+                  {p.title}
+                </div>
+                <p className="text-[11px] sm:text-xs text-zinc-400 leading-relaxed">
+                  {p.detail}
+                </p>
               </div>
-              <div className="text-sm font-bold text-white">
-                {p.title}
-              </div>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                {p.detail}
-              </p>
             </motion.div>
           ))}
         </div>

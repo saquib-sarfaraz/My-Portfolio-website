@@ -1,0 +1,64 @@
+[
+  {
+    "id": "wonderkids-internship-2026",
+    "title": "WonderKids Club",
+    "role": "Full Stack Developer Intern",
+    "status": "CURRENT INTERNSHIP",
+    "period": "June 2026 – August 2026",
+    "company": "WonderKids Club (Vaultboard Consulting Pvt. Ltd.)",
+    "location": "Remote",
+    "type": "Industry Internship",
+    "summary": "Building production educational web applications, interactive learning games, game simulation modules, and full-stack platform features while collaborating directly with the founder.",
+    "highlights": [
+      "Developing production educational web applications and interactive learning games.",
+      "Building responsive interfaces using HTML, CSS, and JavaScript.",
+      "Working with PHP and Python for backend functionality and platform features.",
+      "Collaborating directly with the founder to implement production-ready educational experiences.",
+      "Improving UI responsiveness, animations, and cross-device compatibility."
+    ],
+    "techStack": ["HTML5", "CSS3", "JavaScript", "PHP", "Python", "Git"],
+    "actions": [
+      { "type": "scroll", "target": "experience", "label": "View Experience Timeline" }
+    ]
+  },
+  {
+    "id": "pizeonfly-internship-2024",
+    "title": "Pizeonfly Pvt Ltd",
+    "role": "Web Developer Intern",
+    "status": "Verified Internship",
+    "period": "Sep 2024 – Oct 2024",
+    "company": "Pizeonfly Pvt Ltd",
+    "location": "New Delhi, India",
+    "summary": "Developed full-stack features using React.js and Node.js/Express.js backend. Implemented authentication flows, integrated REST APIs, and supported end-to-end deployment on Vercel/Render.",
+    "techStack": ["React.js", "Node.js", "Express.js", "REST APIs", "JWT Auth", "Google OAuth", "Vercel", "Render"],
+    "actions": [
+      { "type": "scroll", "target": "experience", "label": "View Experience Timeline" }
+    ]
+  },
+  {
+    "id": "gfg-campus-mantri-2025",
+    "title": "GeeksforGeeks Campus Mantri",
+    "role": "Campus Mantri (Campus Lead)",
+    "status": "Community Leadership",
+    "period": "2025 – 2026",
+    "company": "GeeksforGeeks",
+    "location": "Jamia Hamdard University",
+    "summary": "Fostered a technical culture at Jamia Hamdard by connecting 200+ students with coding competitions, peer learning sessions, hackathon prep groups, and technical resource guides.",
+    "actions": [
+      { "type": "scroll", "target": "experience", "label": "View Experience Timeline" }
+    ]
+  },
+  {
+    "id": "nsdc-leadership-2024",
+    "title": "NSDC Student Chapter",
+    "role": "Co-Chairperson",
+    "status": "Executive Leadership",
+    "period": "2024 – 2025",
+    "company": "NSDC",
+    "location": "Jamia Hamdard",
+    "summary": "Co-headed skill development initiatives and technical workshops aligned with national tech frameworks.",
+    "actions": [
+      { "type": "scroll", "target": "experience", "label": "View Experience Timeline" }
+    ]
+  }
+]

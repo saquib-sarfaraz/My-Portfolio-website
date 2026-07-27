@@ -78,7 +78,7 @@ export default function SkillOrbit() {
                 <h4 className="text-xs font-bold text-zinc-300 font-mono uppercase tracking-wider border-l-2 border-sky-400 pl-3">
                   {cat.title}
                 </h4>
-                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {cat.skills.map((skill) => (
                     <TechTooltip key={skill.name} skill={skill} />
                   ))}

@@ -1,0 +1,42 @@
+{
+  "categories": [
+    {
+      "name": "Frontend Engineering",
+      "skills": [
+        { "name": "React.js", "level": "Production Ready", "experience": "2+ Years", "projects": 8 },
+        { "name": "JavaScript (ES6+)", "level": "Core Mastery", "experience": "3+ Years", "projects": 15 },
+        { "name": "Tailwind CSS", "level": "Design Systems", "experience": "2+ Years", "projects": 10 },
+        { "name": "HTML5 & CSS3", "level": "Core Mastery", "experience": "3+ Years", "projects": 15 },
+        { "name": "Framer Motion", "level": "Proficient", "experience": "1+ Year", "projects": 5 }
+      ]
+    },
+    {
+      "name": "Backend & Systems",
+      "skills": [
+        { "name": "Node.js", "level": "Production Ready", "experience": "2+ Years", "projects": 6 },
+        { "name": "Express.js", "level": "Production Ready", "experience": "2+ Years", "projects": 6 },
+        { "name": "Socket.io", "level": "Real-Time Sync", "experience": "1+ Year", "projects": 3 },
+        { "name": "PHP", "level": "Backend Development", "experience": "1+ Year", "projects": 3 },
+        { "name": "Python", "level": "Scripting & Backend", "experience": "1+ Year", "projects": 3 }
+      ]
+    },
+    {
+      "name": "Database & Cloud",
+      "skills": [
+        { "name": "MongoDB Atlas", "level": "Production DB", "experience": "2+ Years", "projects": 5 },
+        { "name": "Cloudinary CDN", "level": "Media Pipeline", "experience": "1+ Year", "projects": 3 },
+        { "name": "Vercel / Render", "level": "Production CI/CD", "experience": "2+ Years", "projects": 10 }
+      ]
+    },
+    {
+      "name": "Tools & DevOps",
+      "skills": [
+        { "name": "Git & GitHub", "level": "Version Control", "experience": "3+ Years", "projects": 15 },
+        { "name": "Figma", "level": "UI Design", "experience": "2+ Years", "projects": 8 }
+      ]
+    }
+  ],
+  "actions": [
+    { "type": "scroll", "target": "skills", "label": "View Full Skills Grid" }
+  ]
+}

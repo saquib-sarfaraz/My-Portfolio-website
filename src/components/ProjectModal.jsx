@@ -9,6 +9,7 @@ export default function ProjectModal({ project, isOpen, onClose }) {
 
     // Prevent background page scrolling when modal is active
     document.body.style.overflow = 'hidden';
+    window.lenis?.stop();
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
@@ -17,7 +18,8 @@ export default function ProjectModal({ project, isOpen, onClose }) {
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
+      window.lenis?.start();
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);

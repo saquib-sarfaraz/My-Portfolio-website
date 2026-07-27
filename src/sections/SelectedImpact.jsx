@@ -67,8 +67,8 @@ export default function SelectedImpact() {
           </h2>
         </motion.div>
 
-        {/* Impact Cards Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+        {/* Impact Cards 2x2 Responsive Metric Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-left">
           {impactData.map((item, idx) => (
             <motion.div
               key={item.id}
@@ -78,20 +78,22 @@ export default function SelectedImpact() {
               transition={{ duration: 0.7, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -6, scale: 1.02 }}
               data-cursor-label="METRIC"
-              className="p-6 rounded-3xl bg-slate-900/70 border border-slate-800 hover:border-sky-500/40 space-y-3 shadow-xl backdrop-blur-xl transition-all duration-300 group cursor-pointer"
+              className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-slate-900/70 border border-slate-800 hover:border-sky-500/40 space-y-2 shadow-xl backdrop-blur-xl transition-all duration-300 group cursor-pointer flex flex-col justify-between"
             >
-              <div className="text-3xl sm:text-4xl font-extrabold text-white font-mono tracking-tight group-hover:text-sky-400 transition-colors flex items-center justify-between">
-                <AnimatedNumber value={item.metric} />
-                <TrendingUp className="w-4 h-4 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="space-y-1.5">
+                <div className="text-2xl sm:text-4xl font-extrabold text-white font-mono tracking-tight group-hover:text-sky-400 transition-colors flex items-center justify-between">
+                  <AnimatedNumber value={item.metric} />
+                  <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                </div>
+                <div className="text-xs font-bold text-slate-200 font-mono leading-snug">
+                  {item.label}
+                </div>
+                <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed font-sans line-clamp-2">
+                  {item.description}
+                </p>
               </div>
-              <div className="text-xs font-bold text-slate-200 font-mono">
-                {item.label}
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed font-sans">
-                {item.description}
-              </p>
-              <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500 pt-2 border-t border-slate-800/80">
-                Category: {item.category}
+              <div className="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-slate-500 pt-1.5 border-t border-slate-800/80">
+                {item.category}
               </div>
             </motion.div>
           ))}

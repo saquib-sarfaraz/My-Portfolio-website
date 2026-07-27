@@ -34,8 +34,8 @@ export default function WorkspaceSection() {
         
         {/* Section Title & OS Tag */}
         <motion.div
-          initial={{ opacity: 0, y: 28, filter: 'blur(10px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="text-center space-y-3"
@@ -51,8 +51,63 @@ export default function WorkspaceSection() {
           </p>
         </motion.div>
 
-        {/* MAIN WORKSPACE CANVAS: Interactive 3D Desk & Developer.tsx Code Window */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        {/* DEDICATED MOBILE COMPACT 2-COLUMN GRID (< lg Viewports) */}
+        <div className="lg:hidden space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 className="text-xs font-bold text-white font-mono uppercase tracking-wider border-l-4 border-sky-400 pl-3">
+              Workspace Modules & Systems
+            </h3>
+            <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 font-bold">
+              ONLINE v2.6
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { title: 'Developer.tsx', tag: 'Core Stack', desc: 'React 19, Node.js, MongoDB, Socket.io', badge: 'Active' },
+              { title: 'InCampus.ts', tag: 'Flagship SaaS', desc: 'Realtime Campus Social & Chat Engine', badge: 'v2.6 Live' },
+              { title: 'AISpendAudit.ts', tag: 'Groq AI Audit', desc: 'SaaS Subscription Overlap Optimization', badge: '$3.4k Saved' },
+              { title: 'WonderKids.jsx', tag: 'Active Internship', desc: 'Educational Web Platforms & Simulators', badge: 'Intern' },
+              { title: 'SocketEngine.js', tag: 'Realtime Gateway', desc: 'Sub-100ms Latency Broadcast Stream', badge: '18ms' },
+              { title: 'Deployments', tag: 'Infra Status', desc: 'AWS us-east-1 + Vercel Edge CDN', badge: '100% Green' },
+            ].map((module) => (
+              <div
+                key={module.title}
+                onClick={() => setActiveTab(module.title)}
+                className={`p-3.5 rounded-2xl bg-slate-900/80 border transition-all cursor-pointer flex flex-col justify-between space-y-2 text-left ${
+                  activeTab === module.title
+                    ? 'border-sky-400 bg-slate-900 shadow-md'
+                    : 'border-slate-800 hover:border-slate-700'
+                }`}
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-mono text-sky-400 font-bold px-1.5 py-0.5 rounded bg-sky-500/10 truncate max-w-[75%]">
+                      {module.tag}
+                    </span>
+                    <span className="text-[8px] font-mono text-emerald-400 font-extrabold">{module.badge}</span>
+                  </div>
+
+                  <div className="text-xs font-mono font-bold text-white pt-1">
+                    {module.title}
+                  </div>
+
+                  <p className="text-[10px] font-sans text-slate-400 leading-snug line-clamp-2">
+                    {module.desc}
+                  </p>
+                </div>
+
+                <div className="pt-1 border-t border-slate-800/80 flex items-center justify-between text-[9px] font-mono text-slate-400">
+                  <span>Inspect</span>
+                  <ArrowRight className="w-3 h-3 text-sky-400" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* DESKTOP WORKSPACE CANVAS: Interactive 3D Desk & Developer.tsx Code Window (≥ lg Viewports) */}
+        <div className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* LEFT 7 COLS: Developer.tsx IDE Window & Terminal Log */}
           <motion.div
@@ -243,54 +298,6 @@ export default function WorkspaceSection() {
               <span className="text-slate-400 text-[10px]">React 19 + Three.js</span>
             </div>
 
-          </div>
-        </div>
-
-        {/* WORKSPACE PRODUCT PREVIEWS GRID */}
-        <div className="space-y-6 pt-6">
-          <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-extrabold text-white font-sans flex items-center gap-2">
-              <Activity className="w-5 h-5 text-sky-400" />
-              <span>Workspace Product Lineup</span>
-            </h3>
-            <a href="#products" className="text-xs font-mono text-sky-400 hover:underline flex items-center gap-1">
-              View All Projects <ArrowRight className="w-3.5 h-3.5" />
-            </a>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {projects.slice(0, 3).map((proj) => (
-              <div
-                key={proj.id}
-                className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-sky-500/40 transition-all duration-300 space-y-4 text-left group"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono px-3 py-1 rounded-full bg-slate-800 text-sky-400 border border-slate-700 font-semibold">
-                    {proj.category}
-                  </span>
-                  <span className="text-[10px] font-mono text-emerald-400 font-bold">{proj.status}</span>
-                </div>
-
-                <div className="space-y-1">
-                  <h4 className="text-lg font-extrabold text-white group-hover:text-sky-400 transition-colors font-sans">
-                    {proj.title}
-                  </h4>
-                  <p className="text-xs font-mono text-slate-400 line-clamp-1">{proj.subtitle}</p>
-                </div>
-
-                <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed font-sans">
-                  {proj.overview}
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 pt-2">
-                  {proj.tags.slice(0, 4).map((tag) => (
-                    <span key={tag} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800/80 text-slate-300">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
           </div>
         </div>
 

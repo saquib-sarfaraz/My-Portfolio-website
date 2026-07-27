@@ -94,8 +94,8 @@ export default function AboutMe() {
           
           {/* LEFT SIDE (5 Grid Cols): Profile Image & Bio Details */}
           <motion.div
-            initial={{ opacity: 0, x: -20, filter: 'blur(10px)' }}
-            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 glass-card p-8 rounded-3xl space-y-6 flex flex-col items-center justify-between text-center"
@@ -152,8 +152,8 @@ export default function AboutMe() {
 
           {/* RIGHT SIDE (7 Grid Cols): Written Overview & Quick Stats Cards */}
           <motion.div
-            initial={{ opacity: 0, x: 20, filter: 'blur(10px)' }}
-            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 space-y-6 flex flex-col justify-between"

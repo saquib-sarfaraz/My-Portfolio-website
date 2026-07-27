@@ -14,6 +14,7 @@ export default function LivePreviewModal({ project, isOpen, onClose }) {
     setIframeFailed(false);
 
     document.body.style.overflow = 'hidden';
+    window.lenis?.stop();
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
@@ -30,7 +31,8 @@ export default function LivePreviewModal({ project, isOpen, onClose }) {
     }, 4000);
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
+      window.lenis?.start();
       window.removeEventListener('keydown', handleKeyDown);
       clearTimeout(timer);
     };

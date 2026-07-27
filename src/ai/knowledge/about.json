@@ -1,0 +1,29 @@
+{
+  "id": "about",
+  "title": "About Saquib Sarfaraz",
+  "category": "About",
+  "tags": ["bio", "education", "location", "status", "recruiter", "background"],
+  "summary": "Full Stack Developer pursuing B.Tech CSE at Jamia Hamdard in New Delhi, India. Specializes in product engineering, scalable SaaS platforms, real-time socket engines, and interactive web tools.",
+  "content": {
+    "name": "Saquib Sarfaraz",
+    "title": "Full Stack Developer",
+    "osName": "Saquib OS",
+    "osVersion": "v2.6",
+    "location": "New Delhi, India (Open to Remote / Relocation)",
+    "education": "B.Tech Computer Science Engineering student at Jamia Hamdard University",
+    "availability": "Available for Full Stack Developer & Software Engineer Roles & Internships",
+    "bio": "I am a Full Stack Developer specializing in product engineering, scalable web platforms, and thoughtful user experiences. Currently pursuing B.Tech in CSE at Jamia Hamdard, I build end-to-end web applications, real-time systems, and interactive learning tools.",
+    "currentInternship": "Full Stack Web Developer Intern at WonderKids Club (June 2026 – August 2026)",
+    "flagshipProduct": "InCampus (https://incampus.online)",
+    "recruiterInfo": {
+      "status": "🟢 Available for Opportunities",
+      "preferredRoles": ["Full Stack Developer", "Frontend Engineer", "Software Engineer"],
+      "responseTime": "< 24 hours",
+      "currentLocation": "New Delhi, India"
+    }
+  },
+  "actions": [
+    { "type": "scroll", "target": "about", "label": "Go to About Section" },
+    { "type": "scroll", "target": "contact", "label": "Contact Saquib" }
+  ]
+}

@@ -4,11 +4,19 @@ import { Search, FolderGit2, Briefcase, User, Mail, FileText, ExternalLink, Game
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { profileData } from '../content/profile';
 
-export default function CommandPalette({ isOpen, onClose }) {
+export default function CommandPalette({ isOpen, onClose, onOpenAISearch }) {
   const [query, setQuery] = useState('');
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
+    } else {
+      document.body.style.overflow = '';
+      window.lenis?.start();
+    }
+
     const handleKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
@@ -21,18 +29,41 @@ export default function CommandPalette({ isOpen, onClose }) {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.lenis?.start();
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [isOpen, onClose]);
 
+  const scrollToElement = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (window.lenis) {
+      window.lenis.scrollTo(el, { offset: -60, duration: 1.2 });
+    } else {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const actions = [
+    {
+      id: 'ai-search',
+      label: '✨ Launch AI Search (Grok Mode)',
+      category: 'AI Assistant',
+      icon: Search,
+      perform: () => {
+        onClose();
+        if (onOpenAISearch) onOpenAISearch();
+      }
+    },
     {
       id: 'projects',
       label: 'Go to Featured Products & Systems',
       category: 'Navigation',
       icon: FolderGit2,
       perform: () => {
-        const el = document.getElementById('projects');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        scrollToElement('projects');
         onClose();
       }
     },
@@ -42,8 +73,7 @@ export default function CommandPalette({ isOpen, onClose }) {
       category: 'Navigation',
       icon: Briefcase,
       perform: () => {
-        const el = document.getElementById('experience');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        scrollToElement('experience');
         onClose();
       }
     },

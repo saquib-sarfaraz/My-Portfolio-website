@@ -1,0 +1,33 @@
+[
+  {
+    "id": "xyxo",
+    "title": "XYXO Tic-Tac-Toe",
+    "category": "Realtime Socket Engine",
+    "status": "Playable Online",
+    "description": "Real-time socket-based multiplayer Tic-Tac-Toe with global matchmaking, room codes, live chat, and single-player Minimax AI.",
+    "actions": [
+      { "type": "playzone", "gameId": "xyxo", "label": "Play XYXO Now" }
+    ]
+  },
+  {
+    "id": "cityflow-3d",
+    "title": "CityFlow Commander 3D",
+    "category": "3D Simulation Engine",
+    "status": "Coming Soon",
+    "description": "Urban traffic signal optimization and multi-agent road pathfinding engine."
+  },
+  {
+    "id": "code-breaker",
+    "title": "Code Breaker Matrix",
+    "category": "Logic & Encryption",
+    "status": "Coming Soon",
+    "description": "High-speed algorithmic pattern decoding and spatial matrix tracing challenge."
+  },
+  {
+    "id": "speed-typer",
+    "title": "Speed Typer OS",
+    "category": "Developer Utilities",
+    "status": "Coming Soon",
+    "description": "Sub-100ms syntax typing challenge with real-time WPM metrics & accuracy analytics."
+  }
+]

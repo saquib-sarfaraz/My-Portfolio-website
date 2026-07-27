@@ -24,7 +24,7 @@ export default function CurrentlyBuilding() {
           </h2>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4 text-left">
+        <div className="grid grid-cols-2 gap-3 text-left">
           {items.map((item, idx) => {
             const Icon = iconMap[idx] || Layers;
             return (
@@ -34,24 +34,26 @@ export default function CurrentlyBuilding() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="p-6 rounded-2xl bg-[#050816] border border-zinc-800 hover:border-zinc-700 transition-all space-y-3 shadow-sm"
+                className="p-4 sm:p-6 rounded-2xl bg-[#050816] border border-zinc-800 hover:border-zinc-700 transition-all space-y-2 shadow-sm flex flex-col justify-between"
               >
-                <div className="flex items-center justify-between">
-                  <div className="p-2.5 rounded-xl bg-zinc-800/60 text-sky-400">
-                    <Icon className="w-5 h-5" />
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="p-2 rounded-xl bg-zinc-800/60 text-sky-400">
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </div>
+                    <span className="text-[9px] sm:text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-zinc-800/80 text-zinc-400">
+                      {item.badge}
+                    </span>
                   </div>
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-800/80 text-zinc-400">
-                    {item.badge}
-                  </span>
+
+                  <h3 className="text-xs sm:text-lg font-bold text-white leading-snug">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed line-clamp-3">
+                    {item.description}
+                  </p>
                 </div>
-
-                <h3 className="text-lg font-bold text-white">
-                  {item.title}
-                </h3>
-
-                <p className="text-zinc-400 text-xs leading-relaxed">
-                  {item.description}
-                </p>
               </motion.div>
             );
           })}

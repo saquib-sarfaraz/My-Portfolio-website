@@ -1,0 +1,100 @@
+[
+  {
+    "id": "incampus",
+    "title": "InCampus",
+    "subtitle": "Private Campus Social & Community Network",
+    "category": "Full Stack SaaS",
+    "eyebrow": "Flagship SaaS Product",
+    "status": "Live Platform",
+    "demoUrl": "https://incampus.online",
+    "githubUrl": "https://github.com/saquib-sarfaraz",
+    "tags": ["React", "Node.js", "Express", "MongoDB Atlas", "Socket.io", "Cloudinary", "JWT OAuth"],
+    "summary": "University-exclusive social network featuring isolated campus feeds, real-time 1-to-1 messaging, identity verification workflows, and automated report moderation.",
+    "overview": "A university-exclusive social network featuring isolated campus feeds, real-time 1-to-1 messaging, dynamic identity verification workflows, and automated report moderation.",
+    "challenge": "Enforcing strict campus privacy boundaries while facilitating verified cross-college communication, alongside managing real-time chat concurrency.",
+    "approach": "Engineered a multi-tenant MongoDB data schema isolating campus feeds with weighted ranking algorithms, integrated Google OAuth 2.0 + JWT authentication, and implemented low-latency Socket.io channels.",
+    "architecture": [
+      "Authentication: Google OAuth 2.0 with JWT access token auto-rotation",
+      "Feed Engine: Universal vs My College feed modes with MongoDB aggregation pipelines",
+      "Chat System: Socket.io 1-to-1 and group messaging with presence detection",
+      "Media Pipeline: Signed client uploads to Cloudinary with image optimization"
+    ],
+    "results": [
+      "Successfully onboarded university students with instant campus verification",
+      "Achieved sub-100ms real-time chat latency using event-driven socket handling",
+      "Zero reported feed leaks across distinct college privacy boundaries"
+    ],
+    "actions": [
+      { "type": "project", "id": "incampus", "label": "Open InCampus Details" },
+      { "type": "live", "url": "https://incampus.online", "label": "View InCampus Live" },
+      { "type": "github", "url": "https://github.com/saquib-sarfaraz", "label": "GitHub Code" }
+    ]
+  },
+  {
+    "id": "ai-spend-audit",
+    "title": "AI Spend Audit",
+    "subtitle": "AI-Powered SaaS Cost Optimisation Platform",
+    "category": "Full Stack SaaS",
+    "eyebrow": "AI SaaS Platform",
+    "status": "Live Platform",
+    "demoUrl": "https://ai-audit-lilac.vercel.app",
+    "githubUrl": "https://github.com/saquib-sarfaraz/ai-audit-",
+    "tags": ["React", "TypeScript", "Node.js", "Express.js", "MongoDB", "Groq AI", "Tailwind CSS", "Vite"],
+    "summary": "AI-powered SaaS platform analyzing AI subscription costs, detecting overlapping tools, optimizing seat allocation, and generating shareable cost reports using Groq AI.",
+    "overview": "AI-powered SaaS platform that helps startups and development teams analyze AI subscription costs, detect overlapping tools, optimize seat allocation, and generate shareable cost-saving reports.",
+    "challenge": "Aggregating disparate AI tool subscriptions and leveraging LLM reasoning to evaluate seat utilization and tool overlap in real time.",
+    "approach": "Integrated Groq AI for instant optimization recommendations, built responsive interactive analytics dashboards, and created shareable report pages with unique permalinks.",
+    "architecture": [
+      "Groq AI LLM Engine: Generates actionable cost-saving summaries & tool overlap detection",
+      "Interactive Analytics: Dashboard charts comparing current vs optimized tool spend",
+      "Shareable Audit Reports: Unique URL generation for multi-step team review",
+      "REST Backend API: Node.js, Express, and MongoDB for subscription data persistence"
+    ],
+    "results": [
+      "Built production-ready SaaS application with end-to-end audit workflows",
+      "Integrated Groq AI for instant cost recommendations and tool redundancy detection",
+      "Deployed live on Vercel with environment-based configuration"
+    ],
+    "actions": [
+      { "type": "project", "id": "ai-spend-audit", "label": "Open AI Spend Audit Details" },
+      { "type": "live", "url": "https://ai-audit-lilac.vercel.app", "label": "View Live Demo" },
+      { "type": "github", "url": "https://github.com/saquib-sarfaraz/ai-audit-", "label": "GitHub Repo" }
+    ]
+  },
+  {
+    "id": "xyxo",
+    "title": "XYXO Game Engine",
+    "subtitle": "Real-Time Multiplayer Engine",
+    "category": "Multiplayer System",
+    "eyebrow": "Multiplayer System",
+    "status": "Live & Playable",
+    "demoUrl": "https://xyxo.vercel.app/",
+    "githubUrl": "https://github.com/saquib-sarfaraz",
+    "tags": ["React", "Socket.io", "Node.js", "Express", "Minimax AI"],
+    "summary": "Real-time multiplayer web game featuring room matchmaking, turn synchronization, live chat, and single-player Minimax AI fallback.",
+    "overview": "Real-time multiplayer web game featuring room matchmaking, turn synchronization, live chat, and single-player Minimax AI fallback.",
+    "challenge": "Preventing state desynchronization between players over mobile networks.",
+    "approach": "Implemented server-authoritative move validation with room pairing queues.",
+    "architecture": ["Dynamic Room Pairing Queue", "Server Move Validation", "Minimax Fallback AI"],
+    "results": ["Instant 50ms turn response with embedded interactive runner."],
+    "actions": [
+      { "type": "playzone", "gameId": "xyxo", "label": "Play XYXO Game" },
+      { "type": "live", "url": "https://xyxo.vercel.app/", "label": "Open Full Game" }
+    ]
+  },
+  {
+    "id": "incampus-help",
+    "title": "InCampus Help",
+    "subtitle": "Verification & Support Portal",
+    "category": "InCampus Ecosystem",
+    "eyebrow": "Support Portal",
+    "status": "Live",
+    "demoUrl": "https://incampus-help.online",
+    "githubUrl": "https://github.com/saquib-sarfaraz",
+    "tags": ["React", "Node.js", "MongoDB", "Forms Webhook"],
+    "summary": "Support portal centralizing student identity verification requests, blue tick badge issuances, FAQs, and developer docs.",
+    "actions": [
+      { "type": "live", "url": "https://incampus-help.online", "label": "Open Help Portal" }
+    ]
+  }
+]
