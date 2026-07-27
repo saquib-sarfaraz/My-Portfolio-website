@@ -49,7 +49,7 @@ export default function CommandPalette({ isOpen, onClose, onOpenAISearch }) {
   const actions = [
     {
       id: 'ai-search',
-      label: '✨ Launch AI Search (Grok Mode)',
+      label: 'Launch AI Search',
       category: 'AI Assistant',
       icon: Search,
       perform: () => {

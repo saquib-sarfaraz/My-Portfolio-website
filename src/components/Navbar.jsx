@@ -134,15 +134,15 @@ export default function Navbar({ onOpenCommandPalette, onOpenPlayZone, onOpenAIS
 
         {/* Right Action Cluster */}
         <div className="flex items-center gap-2">
-          {/* ✨ AI Search Dedicated Button */}
+          {/* AI Search Dedicated Button */}
           <button
             onClick={onOpenAISearch}
             className="p-2 sm:px-3.5 sm:py-1.5 rounded-full bg-gradient-to-r from-sky-500/20 via-purple-500/20 to-emerald-500/20 border border-sky-400/40 hover:border-sky-400 text-sky-300 hover:text-white text-xs font-mono font-bold transition-all flex items-center gap-1.5 shadow-md hover:scale-[1.03] cursor-pointer"
-            title="✨ AI Search"
+            title="AI Search"
             aria-label="Open AI Search"
           >
             <Search className="w-3.5 h-3.5 text-sky-400" />
-            <span className="hidden sm:inline">✨ AI Search</span>
+            <span className="hidden sm:inline">AI Search</span>
           </button>
 
           {/* Resume CTA Button */}
@@ -184,7 +184,7 @@ export default function Navbar({ onOpenCommandPalette, onOpenPlayZone, onOpenAIS
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-left pt-1">
-              {/* ✨ AI Search inside Mobile Hamburger Menu */}
+              {/* AI Search inside Mobile Hamburger Menu */}
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -194,7 +194,7 @@ export default function Navbar({ onOpenCommandPalette, onOpenPlayZone, onOpenAIS
               >
                 <span className="flex items-center gap-1.5">
                   <Search className="w-4 h-4 text-sky-400" />
-                  <span>✨ AI Search</span>
+                  <span>AI Search</span>
                 </span>
                 <span className="text-[10px] text-sky-400">Open Workspace →</span>
               </button>

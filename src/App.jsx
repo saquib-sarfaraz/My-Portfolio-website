@@ -46,7 +46,7 @@ export default function App() {
 
   const openAISearch = () => {
     setIsAISearchOpen(true);
-    window.history.pushState({ page: 'ai' }, '✨ AI Search — Saquib OS', '/ai');
+    window.history.pushState({ page: 'ai' }, 'AI Search — Saquib OS', '/ai');
   };
 
   const closeAISearch = () => {
