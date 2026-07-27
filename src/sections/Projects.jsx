@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowUpRight, Code2, Eye, Server, Terminal, Sparkles } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, Code2, Eye, Server, Terminal, Sparkles, FolderGit2 } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 import ProjectModal from '../components/ProjectModal';
 import LivePreviewModal from '../components/LivePreviewModal';
