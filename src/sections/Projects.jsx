@@ -157,10 +157,18 @@ export default function Projects() {
               {/* 3 Action Buttons Cluster */}
               <div className="flex flex-wrap items-center gap-2">
                 <button
-                  onClick={() => setActivePreviewProject(flagshipProject)}
-                  className="px-4 py-2 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-300 font-bold text-xs hover:bg-sky-500/30 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                  onClick={() => setActiveModalProject(flagshipProject)}
+                  className="px-4 py-2 rounded-full bg-sky-500/25 border border-sky-400/50 text-sky-300 font-bold text-xs hover:bg-sky-500/40 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
                 >
-                  <Eye className="w-3.5 h-3.5" />
+                  <FolderGit2 className="w-3.5 h-3.5" />
+                  <span>View Details</span>
+                </button>
+
+                <button
+                  onClick={() => setActivePreviewProject(flagshipProject)}
+                  className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-slate-200 font-bold text-xs hover:bg-white/20 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                >
+                  <Eye className="w-3.5 h-3.5 text-sky-400" />
                   <span>Preview</span>
                 </button>
 
