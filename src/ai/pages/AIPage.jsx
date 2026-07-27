@@ -167,13 +167,15 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
 
           <div className="h-5 w-[1px] bg-slate-800 hidden sm:block" />
 
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-sky-400 via-purple-500 to-emerald-400 flex items-center justify-center text-white text-xs font-extrabold shadow-md">
-              ✨
-            </div>
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/ai-search-logo.png"
+              alt="Saquib OS AI Search"
+              className="w-7 h-7 rounded-lg object-cover shadow-md border border-sky-400/40"
+            />
             <div>
               <h1 className="font-extrabold text-sm sm:text-base text-white tracking-tight">
-                ✨ AI Search
+                AI Search
               </h1>
             </div>
           </div>
