@@ -92,7 +92,18 @@ export default function Hero() {
             className="flex flex-wrap items-center gap-4 pt-4"
           >
             <a
-              href="#products"
+              href="#projects"
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById('projects');
+                if (el) {
+                  if (window.lenis) {
+                    window.lenis.scrollTo(el, { offset: -60, duration: 1.2 });
+                  } else {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }
+              }}
               className="px-7 py-4 rounded-full bg-white text-black font-extrabold text-xs hover:bg-slate-200 transition-all duration-300 shadow-[0_4px_25px_rgba(255,255,255,0.25)] flex items-center gap-2.5 transform hover:-translate-y-1 hover:scale-[1.03]"
             >
               <FolderGit2 className="w-4 h-4 text-black" />
