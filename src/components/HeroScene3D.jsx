@@ -39,12 +39,26 @@ export default function HeroScene3D() {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // Optimize pixel ratio & shadow maps for smooth mobile/desktop 60 FPS
+    const maxDpr = isMobile ? 1.0 : 1.25;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxDpr));
+    renderer.shadowMap.enabled = !isMobile;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     currentMount.appendChild(renderer.domElement);
+
+    // Visibility Observer to pause rendering loop when off-screen
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+        });
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(currentMount);
 
     // --- 2. LIGHTING (Cinematic & Atmospheric) ---
     const ambientLight = new THREE.AmbientLight(0x1e293b, 2.5);
@@ -213,7 +227,7 @@ export default function HeroScene3D() {
     });
     const desk = new THREE.Mesh(deskGeo, deskMat);
     desk.position.set(0, 0, 0);
-    desk.receiveShadow = true;
+    desk.receiveShadow = !isMobile;
     deskGroup.add(desk);
 
     // Desk Mat
@@ -459,7 +473,7 @@ export default function HeroScene3D() {
     scene.add(devGroup);
 
     // --- 6. PARTICLES SYSTEM ---
-    const particleCount = isMobile ? 50 : 120;
+    const particleCount = isMobile ? 30 : 80;
     const particleGeo = new THREE.BufferGeometry();
     const particlePos = new Float32Array(particleCount * 3);
 
@@ -472,15 +486,15 @@ export default function HeroScene3D() {
     particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
     const particleMat = new THREE.PointsMaterial({
       color: 0x38bdf8,
-      size: 0.05,
+      size: 0.04,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.6,
       blending: THREE.AdditiveBlending,
     });
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // --- 7. MOUSE CURSOR INTERACTION & ANIMATION LOOP ---
+    // --- 7. MOUSE & TOUCH CURSOR INTERACTION & ANIMATION LOOP ---
     let targetMouseX = 0;
     let targetMouseY = 0;
     let currentMouseX = 0;
@@ -492,21 +506,38 @@ export default function HeroScene3D() {
       targetMouseY = -((e.clientY - rect.top) / rect.height - 0.5) * 2;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    const handleTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        const rect = currentMount.getBoundingClientRect();
+        targetMouseX = ((e.touches[0].clientX - rect.left) / rect.width - 0.5) * 2;
+        targetMouseY = -((e.touches[0].clientY - rect.top) / rect.height - 0.5) * 2;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      targetMouseX = 0;
+      targetMouseY = 0;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     const clock = new THREE.Clock();
     let animId;
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
+      if (!isVisible) return; // Skip calculation & rendering when canvas is scrolled out of view
+
       const elapsedTime = clock.getElapsedTime();
 
-      // Smooth mouse interpolation
-      currentMouseX += (targetMouseX - currentMouseX) * 0.04;
-      currentMouseY += (targetMouseY - currentMouseY) * 0.04;
+      // Smooth mouse & touch lerping
+      currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.05;
 
-      // Update Dynamic Monitors Canvas Textures
-      if (Math.floor(elapsedTime * 10) % 2 === 0) {
+      // Update Dynamic Monitors Canvas Textures (Throttled to eliminate WebGL buffer upload lag)
+      if (Math.floor(elapsedTime * 2) % 6 === 0 && Math.floor(elapsedTime * 10) % 10 === 0) {
         drawMainMonitor(elapsedTime);
         mainTexture.needsUpdate = true;
         drawSecMonitor(elapsedTime);
@@ -517,10 +548,18 @@ export default function HeroScene3D() {
       leftForearm.rotation.z = -0.15 + Math.sin(elapsedTime * 14) * 0.025;
       rightForearm.rotation.x = 1.1 + Math.cos(elapsedTime * 12) * 0.02;
 
-      // Breathing & Subtle Head Movement Following Cursor
+      // Breathing & Head Tracking with Scroll-Aware Posture Reset
       headGroup.position.y = Math.sin(elapsedTime * 2.2) * 0.012;
-      headGroup.rotation.y = currentMouseX * 0.35 + Math.sin(elapsedTime * 0.5) * 0.05;
-      headGroup.rotation.x = -currentMouseY * 0.18;
+      
+      const isTopHero = window.scrollY < 300;
+      if (isTopHero) {
+        headGroup.rotation.y = currentMouseX * 0.38 + Math.sin(elapsedTime * 0.5) * 0.04;
+        headGroup.rotation.x = -currentMouseY * 0.22;
+      } else {
+        // Natural workstation focus posture when scrolled past Hero
+        headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, -0.2, 0.04);
+        headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, -0.15, 0.04);
+      }
 
       // Subtle Ergonomic Chair Movement
       chairGroup.rotation.y = Math.sin(elapsedTime * 0.8) * 0.025;
@@ -554,7 +593,10 @@ export default function HeroScene3D() {
 
     return () => {
       cancelAnimationFrame(animId);
+      observer.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
       if (currentMount && renderer.domElement) {
         currentMount.removeChild(renderer.domElement);
@@ -564,132 +606,13 @@ export default function HeroScene3D() {
   }, [isMobile]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[520px] sm:h-[580px] md:h-[640px] rounded-3xl overflow-hidden bg-[#070B19] border border-slate-800/80 shadow-[0_25px_60px_rgba(0,0,0,0.8)] select-none">
-      
+    <div ref={containerRef} className="relative w-full h-[540px] sm:h-[620px] lg:h-[720px] flex items-center justify-center select-none overflow-hidden">
       {/* Three.js 3D WebGL Canvas Layer */}
       <div ref={mountRef} className="absolute inset-0 z-0 pointer-events-auto" />
 
       {/* Volumetric Radial Glows */}
-      <div className="absolute top-10 left-10 w-72 h-72 rounded-full bg-sky-500/10 blur-[90px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-purple-500/10 blur-[100px] pointer-events-none" />
-
-      {/* Floating Micro Orbiting Tech Icons */}
-      <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-        {[
-          { label: 'React', color: 'text-sky-400', pos: 'top-12 left-10' },
-          { label: 'Node.js', color: 'text-emerald-400', pos: 'top-28 right-12' },
-          { label: 'MongoDB', color: 'text-green-500', pos: 'bottom-28 left-14' },
-          { label: 'Socket.io', color: 'text-cyan-400', pos: 'bottom-20 right-16' },
-          { label: 'GitHub', color: 'text-purple-400', pos: 'top-1/2 left-6' },
-          { label: 'Vercel', color: 'text-white', pos: 'top-1/3 right-8' },
-        ].map((item, idx) => (
-          <motion.div
-            key={item.label}
-            animate={{
-              y: [0, -10, 0],
-              opacity: [0.35, 0.65, 0.35],
-            }}
-            transition={{
-              duration: 4 + idx,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: idx * 0.6,
-            }}
-            className={`absolute ${item.pos} hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/60 border border-white/10 text-[11px] font-mono ${item.color} backdrop-blur-md shadow-lg`}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-current animate-ping" />
-            <span>{item.label}</span>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* FLOATING WORKSPACE UI ELEMENTS */}
-      <div className="relative z-20 h-full flex flex-col justify-between p-4 sm:p-6 pointer-events-none">
-        
-        {/* TOP LAYER: Compact Frosted Editor Window & Status Chip */}
-        <div className="flex flex-wrap items-start justify-between gap-3 w-full">
-          
-          {/* Priority 4: Compact Editor Window (Developer.tsx) */}
-          <motion.div
-            style={{ y: codePanelY, opacity: codePanelOpacity }}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="w-full sm:w-[340px] rounded-[24px] bg-slate-900/60 border border-white/15 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4 space-y-3 pointer-events-auto"
-          >
-            {/* Tiny VS Code Header */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
-              <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                <span className="text-xs font-mono text-slate-300 font-medium ml-2 flex items-center gap-1.5">
-                  <Code2 className="w-3.5 h-3.5 text-sky-400" />
-                  Developer.tsx
-                </span>
-              </div>
-              <span className="text-[10px] font-mono text-slate-400">TSX</span>
-            </div>
-
-            {/* Clean Essential Code Content (Only 5-7 lines) */}
-            <pre className="font-mono text-xs text-slate-200 leading-relaxed overflow-x-auto">
-              <code>
-                <span className="text-purple-400">const</span>{' '}
-                <span className="text-sky-300">developer</span> = &#123;{'\n'}
-                {'  '}<span className="text-slate-400">name:</span>{' '}
-                <span className="text-emerald-300">"Saquib Sarfaraz"</span>,{'\n'}
-                {'  '}<span className="text-slate-400">role:</span>{' '}
-                <span className="text-emerald-300">"Full Stack Developer"</span>,{'\n'}
-                {'  '}<span className="text-slate-400">building:</span> [{'\n'}
-                {'    '}<span className="text-amber-300">"WonderKids"</span>,{'\n'}
-                {'    '}<span className="text-amber-300">"InCampus"</span>{'\n'}
-                {'  '}]{'\n'}
-                &#125;;
-              </code>
-            </pre>
-          </motion.div>
-
-          {/* Priority 3: Small Floating Workspace Status Chip */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="px-4 py-2.5 rounded-full bg-slate-900/70 border border-emerald-500/30 backdrop-blur-xl shadow-[0_8px_32px_rgba(34,197,94,0.15)] flex items-center gap-2.5 pointer-events-auto"
-          >
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
-            <div className="text-xs font-mono">
-              <span className="text-emerald-300 font-bold">Available for Opportunities</span>
-              <span className="text-slate-400 mx-2">•</span>
-              <span className="text-slate-200 font-medium">WonderKids • InCampus</span>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* BOTTOM WORKSPACE LABEL (Priority 2: Name & Role) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-full flex items-center justify-between gap-4 px-5 py-3 rounded-2xl bg-slate-900/65 border border-white/15 backdrop-blur-2xl pointer-events-auto text-white font-mono text-xs shadow-2xl"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-3 h-3 rounded-full bg-sky-400 animate-pulse shadow-[0_0_12px_rgba(56,189,248,0.8)]" />
-            <div>
-              <span className="font-bold text-white text-sm">Saquib Sarfaraz</span>
-              <span className="text-slate-400 mx-2">|</span>
-              <span className="text-sky-300 font-semibold">Full Stack Developer</span>
-            </div>
-          </div>
-
-          <div className="hidden md:flex items-center gap-2 text-slate-300 text-xs">
-            <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">React</span>
-            <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Node.js</span>
-            <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">MongoDB</span>
-            <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">Socket.io</span>
-          </div>
-        </motion.div>
-
-      </div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-sky-500/10 blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-72 h-72 rounded-full bg-purple-500/10 blur-[110px] pointer-events-none" />
     </div>
   );
 }

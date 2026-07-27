@@ -1,4 +1,6 @@
-import { useReveal } from '../hooks/useReveal'
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useReveal } from '../hooks/useReveal';
 
 export default function ProjectCard({
   variant,
@@ -14,15 +16,40 @@ export default function ProjectCard({
   impact = [],
   tags = [],
 }) {
-  const revealRef = useReveal()
+  const revealRef = useReveal();
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0, scale: 1 });
 
-  const cardClassName = `glass-panel rounded-3xl p-6 hover:-translate-y-2 transition-transform duration-300 group reveal hover-card ${delayClass}`.trim()
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ rotateX: y * -10, rotateY: x * 10, scale: 1.02 });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ rotateX: 0, rotateY: 0, scale: 1 });
+  };
+
+  const cardClassName = `glass-panel rounded-3xl p-6 transition-all duration-300 group reveal hover-card ${delayClass}`.trim();
 
   return (
-    <article ref={revealRef} data-cursor-label="OPEN →" className={cardClassName}>
+    <motion.article
+      ref={revealRef}
+      data-cursor-label="EXPLORE →"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{
+        rotateX: tilt.rotateX,
+        rotateY: tilt.rotateY,
+        scale: tilt.scale,
+      }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
+      className={cardClassName}
+    >
       {header?.type === 'gradient' ? (
         <div
-          className={`h-44 rounded-2xl ${header.gradientClassName} mb-6 overflow-hidden relative`}
+          className={`h-44 rounded-2xl ${header.gradientClassName} mb-6 overflow-hidden relative group-hover:shadow-[0_0_25px_rgba(56,189,248,0.3)] transition-all duration-300`}
         >
           <div
             className={`absolute inset-0 ${header.overlayClassName} mix-blend-overlay`}
@@ -35,7 +62,7 @@ export default function ProjectCard({
               {header.eyebrow}
             </div>
             <div>
-              <div className="text-2xl font-display font-bold text-white">
+              <div className="text-2xl font-display font-bold text-white group-hover:text-sky-300 transition-colors">
                 {header.name}
               </div>
               <div className="text-xs text-gray-400">{header.subtitle}</div>
@@ -54,7 +81,7 @@ export default function ProjectCard({
           <div
             className={`absolute inset-0 ${header.overlayClassName} mix-blend-overlay`}
           ></div>
-          <img src={header.imageSrc} alt={header.imageAlt} />
+          <img src={header.imageSrc} alt={header.imageAlt} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
         </div>
       ) : null}
 
@@ -154,6 +181,6 @@ export default function ProjectCard({
           </div>
         </>
       ) : null}
-    </article>
-  )
+    </motion.article>
+  );
 }

@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import CurrentInternshipSpotlight from './components/CurrentInternshipSpotlight';
 
 import Hero from './sections/Hero';
+import WorkspaceSection from './sections/WorkspaceSection';
 import AboutMe from './sections/AboutMe';
 import EngineeringJourney from './sections/EngineeringJourney';
 import ArchitectureSection from './sections/ArchitectureSection';
@@ -33,10 +34,12 @@ export default function App() {
 
     // Initialize Lenis weighted smooth scroll inertia
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.2,
+      infinite: false,
     });
 
     function raf(time) {
@@ -77,15 +80,15 @@ export default function App() {
         {/* Main OS Viewport */}
         <main>
           <Hero />
-          <CurrentInternshipSpotlight />
+          <WorkspaceSection />
           <AboutMe />
           <EngineeringJourney />
+          <Projects />
           <ArchitectureSection />
           <CurrentlyBuilding />
           <Skills />
-          <SelectedImpact />
           <Experience />
-          <Projects />
+          <SelectedImpact />
           <SocialProof />
           <GameZone />
           <Contact />

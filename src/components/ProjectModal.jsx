@@ -1,8 +1,27 @@
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, CheckCircle2, ShieldAlert, Cpu, Layers, Sparkles } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 
 export default function ProjectModal({ project, isOpen, onClose }) {
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Prevent background page scrolling when modal is active
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!project) return null;
 
   return (
@@ -24,7 +43,8 @@ export default function ProjectModal({ project, isOpen, onClose }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 15 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-3xl max-h-[90vh] bg-[#111111] border border-zinc-800 rounded-3xl shadow-2xl overflow-y-auto z-10 text-zinc-200"
+            data-lenis-prevent
+            className="relative w-full max-w-3xl max-h-[85vh] bg-[#111111] border border-zinc-800 rounded-3xl shadow-2xl overflow-y-auto z-10 text-zinc-200 scrollbar-thin"
           >
             {/* Modal Header Banner */}
             <div className="relative p-8 bg-[#161616] border-b border-zinc-800 overflow-hidden">

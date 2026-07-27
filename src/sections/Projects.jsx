@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowUpRight, Code2, Server, Terminal } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, Code2, Eye, Server, Terminal } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 import ProjectModal from '../components/ProjectModal';
+import LivePreviewModal from '../components/LivePreviewModal';
 import { flagshipProject, ecosystemProjects, learningProjects } from '../content/projects';
 
 export default function Projects() {
   const [activeModalProject, setActiveModalProject] = useState(null);
+  const [activePreviewProject, setActivePreviewProject] = useState(null);
 
   return (
     <section id="projects" className="py-24 px-4 sm:px-6 relative bg-[#10182C] overflow-hidden">
@@ -16,25 +18,33 @@ export default function Projects() {
 
       <div className="max-w-5xl mx-auto space-y-16 text-left relative z-10">
         {/* Section Header */}
-        <div className="text-center space-y-2">
+        <motion.div
+          initial={{ opacity: 0, y: 28, filter: 'blur(10px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center space-y-2"
+        >
           <span className="text-xs font-mono uppercase tracking-widest text-sky-400 font-bold px-3 py-1 rounded-full bg-white/10 border border-white/15 inline-block shadow-sm">
             Engineered SaaS Systems
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Flagship Product & Infrastructure
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-sans">
+            Flagship Product & <span className="text-sky-400">Infrastructure</span>
           </h2>
           <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto font-mono">
             Architected around the InCampus SaaS ecosystem and real-time multiplayer engines.
           </p>
-        </div>
+        </motion.div>
 
         {/* Flagship Product Showcase: InCampus */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 32, filter: 'blur(12px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="p-8 md:p-10 rounded-3xl glass-card border-2 border-sky-400/50 space-y-8 shadow-[0_20px_60px_rgba(56,189,248,0.25)] relative overflow-hidden"
+          transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+          whileHover={{ y: -4 }}
+          data-cursor-label="FLAGSHIP"
+          className="p-8 md:p-10 rounded-3xl glass-card border-2 border-sky-400/50 space-y-8 shadow-[0_20px_60px_rgba(56,189,248,0.25)] relative overflow-hidden transition-all duration-300"
         >
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-6">
             <div className="space-y-1">
@@ -50,16 +60,37 @@ export default function Projects() {
               <p className="text-slate-200 text-sm font-mono font-medium">{flagshipProject.subtitle}</p>
             </div>
 
-            <div className="flex items-center gap-3">
+            {/* 3 Action Buttons Cluster */}
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => setActivePreviewProject(flagshipProject)}
+                className="px-4 py-2 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-300 font-bold text-xs hover:bg-sky-500/30 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+              >
+                <Eye className="w-3.5 h-3.5" />
+                <span>Preview</span>
+              </button>
+
               {flagshipProject.demoUrl && (
                 <a
                   href={flagshipProject.demoUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-6 py-3 rounded-full bg-white text-black font-extrabold text-xs hover:bg-slate-200 transition-all flex items-center gap-1.5 shadow-lg"
+                  className="px-4 py-2 rounded-full bg-white text-black font-extrabold text-xs hover:bg-slate-200 transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
                 >
-                  <span>Launch Live Platform</span>
+                  <span>Live</span>
                   <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+
+              {flagshipProject.githubUrl && (
+                <a
+                  href={flagshipProject.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white font-bold text-xs hover:bg-white/20 transition-all flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FaGithub className="w-3.5 h-3.5" />
+                  <span>GitHub</span>
                 </a>
               )}
             </div>
@@ -120,7 +151,7 @@ export default function Projects() {
               <div className="pt-2">
                 <button
                   onClick={() => setActiveModalProject(flagshipProject)}
-                  className="text-xs font-mono text-sky-300 underline hover:text-white transition-colors flex items-center gap-1 font-bold"
+                  className="text-xs font-mono text-sky-300 underline hover:text-white transition-colors flex items-center gap-1 font-bold cursor-pointer"
                 >
                   <span>View Full InCampus Architecture Specification</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -181,39 +212,51 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Actions */}
-                <div className="pt-4 border-t border-white/15 flex items-center justify-between text-xs font-mono">
-                  <button
-                    onClick={() => setActiveModalProject(project)}
-                    className="text-sky-300 hover:text-white font-bold flex items-center gap-1"
-                  >
-                    <span>Inspect System Case Study</span>
-                    <span>→</span>
-                  </button>
+                {/* Card Action Controls: Case Study & 3 Action Buttons [Preview] [Live] [GitHub] */}
+                <div className="pt-4 border-t border-white/15 space-y-3 font-mono text-xs">
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => setActiveModalProject(project)}
+                      className="text-sky-300 hover:text-white font-bold flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Case Study</span>
+                      <span>→</span>
+                    </button>
 
-                  <div className="flex items-center gap-2">
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
-                        aria-label="GitHub Repo"
+                    {/* Action Trio */}
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => setActivePreviewProject(project)}
+                        className="px-2.5 py-1 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-300 font-bold text-[11px] hover:bg-sky-500/30 hover:text-white transition-all flex items-center gap-1 cursor-pointer"
                       >
-                        <FaGithub className="w-4 h-4" />
-                      </a>
-                    )}
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
-                        aria-label="Live Demo"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    )}
+                        <Eye className="w-3 h-3" />
+                        <span>Preview</span>
+                      </button>
+
+                      {project.demoUrl && (
+                        <a
+                          href={project.demoUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-2.5 py-1 rounded-full bg-white text-black font-bold text-[11px] hover:bg-slate-200 transition-all flex items-center gap-1 cursor-pointer"
+                        >
+                          <span>Live</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="p-1.5 rounded-full bg-white/10 border border-white/15 text-white hover:bg-white/20 transition-all cursor-pointer"
+                          aria-label="GitHub Repo"
+                        >
+                          <FaGithub className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -231,7 +274,7 @@ export default function Projects() {
             {learningProjects.map((lp) => (
               <div
                 key={lp.id}
-                className="p-4 rounded-xl glass-card flex items-center justify-between gap-4"
+                className="p-4 rounded-xl glass-card flex items-center justify-between gap-4 font-mono text-xs"
               >
                 <div className="space-y-1">
                   <div className="text-sm font-bold text-white">{lp.title}</div>
@@ -245,14 +288,23 @@ export default function Projects() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    onClick={() => setActivePreviewProject(lp)}
+                    className="px-3 py-1.5 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-300 font-bold text-[11px] hover:bg-sky-500/30 hover:text-white transition-all flex items-center gap-1 cursor-pointer"
+                  >
+                    <Eye className="w-3 h-3" />
+                    <span>Preview</span>
+                  </button>
+
                   <a
                     href={lp.demoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2.5 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+                    className="p-2 rounded-full bg-white text-black hover:bg-slate-200 transition-colors cursor-pointer"
+                    aria-label="Live Demo"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
               </div>
@@ -261,11 +313,18 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* Case Study Modal Popup */}
+      {/* Full Architecture Case Study Modal */}
       <ProjectModal
         project={activeModalProject}
         isOpen={!!activeModalProject}
         onClose={() => setActiveModalProject(null)}
+      />
+
+      {/* Live Browser Window Preview Modal */}
+      <LivePreviewModal
+        project={activePreviewProject}
+        isOpen={!!activePreviewProject}
+        onClose={() => setActivePreviewProject(null)}
       />
     </section>
   );

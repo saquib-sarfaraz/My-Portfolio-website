@@ -30,17 +30,23 @@ export default function EngineeringJourney() {
 
       <div className="max-w-4xl mx-auto space-y-16 relative z-10">
         {/* Section Header */}
-        <div className="text-center space-y-3">
+        <motion.div
+          initial={{ opacity: 0, y: 28, filter: 'blur(10px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center space-y-3"
+        >
           <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/10 text-sky-400 text-xs font-mono uppercase tracking-widest border border-white/20 shadow-md backdrop-blur-xl">
             <Compass className="w-4 h-4 text-sky-400" /> Career Milestones
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Engineering Journey
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-sans">
+            Engineering <span className="text-sky-400">Journey</span>
           </h2>
           <p className="text-slate-200 text-sm sm:text-base max-w-xl mx-auto font-mono">
             A chronological timeline of my internships, leadership roles, and technical growth.
           </p>
-        </div>
+        </motion.div>
 
         {/* Timeline Track Container */}
         <div className="relative ml-4 sm:ml-8 pl-8 sm:pl-12 space-y-12">
@@ -61,10 +67,11 @@ export default function EngineeringJourney() {
             return (
               <motion.div
                 key={node.id}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
+                whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                transition={{ duration: 0.7, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                data-cursor-label="MILESTONE"
                 className="relative space-y-3"
               >
                 {/* Node Marker */}

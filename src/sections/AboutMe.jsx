@@ -1,7 +1,36 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { User, MapPin, GraduationCap, Briefcase, Rocket, Code2, Sparkles } from 'lucide-react';
 import { profileData } from '../content/profile';
 import profilePic from '../assets/profile-pic.jpeg';
+
+// Hardware-accelerated GPU scroll reading highlight component
+function WordHighlightParagraph({ text }) {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 0.85', 'end 0.45'],
+  });
+
+  const clipRight = useTransform(scrollYProgress, [0, 1], [100, 0]);
+  const clipPath = useTransform(clipRight, (val) => `inset(0 ${val}% 0 0)`);
+
+  return (
+    <div ref={containerRef} className="relative font-sans text-base sm:text-lg leading-relaxed font-normal">
+      {/* Dim Unread Text */}
+      <p className="text-slate-500/70">
+        {text}
+      </p>
+      {/* Bright White Read Text revealed via GPU clip-path */}
+      <motion.p
+        style={{ clipPath }}
+        className="absolute inset-0 text-white font-medium select-none pointer-events-none drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+      >
+        {text}
+      </motion.p>
+    </div>
+  );
+}
 
 export default function AboutMe() {
   const quickStats = [
@@ -36,6 +65,10 @@ export default function AboutMe() {
     'JavaScript (ES6+)', 'PHP', 'Python', 'Git', 'Cloudinary', 'REST APIs', 'Tailwind CSS'
   ];
 
+  const bioParagraph1 = "I'm Saquib Sarfaraz, a Computer Science Engineering student at Jamia Hamdard and a Full Stack Developer passionate about building scalable web applications, real-time systems, and interactive digital products.";
+  const bioParagraph2 = "Currently, I'm working as a Full Stack Developer Intern at WonderKids Club, where I build production-ready educational platforms and interactive learning modules using HTML, CSS, JavaScript, PHP, and Python.";
+  const bioParagraph3 = "I enjoy engineering products that combine clean architecture, sub-100ms API performance, and engaging user interfaces—from campus social ecosystems like InCampus to high-speed backend microservices.";
+
   return (
     <section id="about" className="py-24 px-4 sm:px-6 relative bg-gradient-to-b from-[#0B1020] via-[#10182C] to-[#0B1020] text-left overflow-hidden">
       {/* Background Glow Blobs */}
@@ -61,10 +94,10 @@ export default function AboutMe() {
           
           {/* LEFT SIDE (5 Grid Cols): Profile Image & Bio Details */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -20, filter: 'blur(10px)' }}
+            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 glass-card p-8 rounded-3xl space-y-6 flex flex-col items-center justify-between text-center"
           >
             <div className="space-y-6 flex flex-col items-center w-full">
@@ -119,29 +152,23 @@ export default function AboutMe() {
 
           {/* RIGHT SIDE (7 Grid Cols): Written Overview & Quick Stats Cards */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 20, filter: 'blur(10px)' }}
+            whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 space-y-6 flex flex-col justify-between"
           >
-            {/* Paragraph Bio Box */}
-            <div className="glass-card p-8 rounded-3xl space-y-4">
+            {/* Paragraph Bio Box with Interactive Reading Highlight */}
+            <div className="glass-card p-8 rounded-3xl space-y-6">
               <h3 className="text-xl font-extrabold text-white flex items-center gap-2">
                 <Code2 className="w-5 h-5 text-sky-400" />
                 <span>Professional Summary</span>
               </h3>
 
-              <div className="space-y-3 text-slate-200 text-sm sm:text-base leading-relaxed font-normal">
-                <p>
-                  I'm <strong className="text-white font-semibold">Saquib Sarfaraz</strong>, a Computer Science Engineering student at Jamia Hamdard and a Full Stack Developer passionate about building scalable web applications, real-time systems, and interactive digital products.
-                </p>
-                <p>
-                  Currently, I'm working as a <strong className="text-emerald-300 font-semibold">Full Stack Developer Intern at WonderKids Club</strong>, where I build production-ready educational platforms and interactive learning modules using HTML, CSS, JavaScript, PHP, and Python.
-                </p>
-                <p>
-                  I enjoy engineering products that combine clean architecture, sub-100ms API performance, and engaging user interfaces—from campus social ecosystems like <strong className="text-sky-300 font-semibold">InCampus</strong> to high-speed backend microservices.
-                </p>
+              <div className="space-y-4">
+                <WordHighlightParagraph text={bioParagraph1} />
+                <WordHighlightParagraph text={bioParagraph2} />
+                <WordHighlightParagraph text={bioParagraph3} />
               </div>
             </div>
 

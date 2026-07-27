@@ -35,42 +35,33 @@ export const flagshipProject = {
 
 export const ecosystemProjects = [
   {
-    id: 'incampus-help',
-    title: 'InCampus Help',
-    subtitle: 'Verification & Support Portal',
-    category: 'InCampus Ecosystem',
-    eyebrow: 'Support Portal',
-    status: 'Live',
-    demoUrl: 'https://incampus-help.online',
-    githubUrl: 'https://github.com/saquib-sarfaraz',
+    id: 'ai-spend-audit',
+    featured: true,
+    title: 'AI Spend Audit',
+    subtitle: 'AI-Powered SaaS Cost Optimisation Platform',
+    category: 'Full Stack SaaS',
+    eyebrow: 'AI SaaS Platform',
+    status: 'Live Platform',
+    demoUrl: 'https://ai-audit-lilac.vercel.app',
+    githubUrl: 'https://github.com/saquib-sarfaraz/ai-audit-',
     image: null,
-    gradient: 'from-emerald-500/20 via-[#090B1A] to-teal-600/20',
-    accentColor: '#22c55e',
-    tags: ['React', 'Node.js', 'MongoDB', 'Forms Webhook'],
-    overview: 'A dedicated support center centralizing student verification requests, blue tick badge issuances, FAQs, and developer documentation.',
-    challenge: 'Streamlining manual campus identity verification requests while giving users transparent status feedback.',
-    approach: 'Designed a searchable support documentation center connected with webhook form submissions for verification ticket processing.',
-    architecture: ['Searchable Knowledge Index', 'Dynamic Verification Request Queues'],
-    results: ['Automated verification inquiry workflows with 100% policy transparency.']
-  },
-  {
-    id: 'college-search-api',
-    title: 'College Search API',
-    subtitle: 'Infrastructure Powering InCampus',
-    category: 'InCampus Infrastructure',
-    eyebrow: 'Core Infrastructure',
-    status: 'Production API',
-    demoUrl: null,
-    githubUrl: 'https://github.com/saquib-sarfaraz',
-    image: null,
-    gradient: 'from-blue-500/20 via-[#090B1A] to-cyan-600/20',
-    accentColor: '#38bdf8',
-    tags: ['Node.js', 'Express', 'MongoDB Atlas', 'Regex Search Index'],
-    overview: 'High-speed autocomplete microservice indexing thousands of global universities for student onboarding search within InCampus.',
-    challenge: 'Ensuring sub-20ms search query response times across thousands of university names with partial prefix matches.',
-    approach: 'Created MongoDB compound text & wildcard indexes with memory-cached frequent query responses.',
-    architecture: ['Compound Regex Text Indexing', 'Express Middleware Rate Limiting'],
-    results: ['Sub-15ms search latency reducing onboarding drop-offs.']
+    gradient: 'from-purple-500/25 via-[#090B1A] to-sky-600/25',
+    accentColor: '#a855f7',
+    tags: ['React', 'TypeScript', 'Node.js', 'Express.js', 'MongoDB', 'Groq AI', 'Tailwind CSS', 'Vite'],
+    overview: 'AI-powered SaaS platform that helps startups and development teams analyze AI subscription costs, detect overlapping tools, optimize seat allocation, and generate shareable cost-saving reports.',
+    challenge: 'Aggregating disparate AI tool subscriptions and leveraging LLM reasoning to evaluate seat utilization and tool overlap in real time.',
+    approach: 'Integrated Groq AI for instant optimization recommendations, built responsive interactive analytics dashboards, and created shareable report pages with unique permalinks.',
+    architecture: [
+      'Groq AI LLM Engine: Generates actionable cost-saving summaries & tool overlap detection',
+      'Interactive Analytics: Dashboard charts comparing current vs optimized tool spend',
+      'Shareable Audit Reports: Unique URL generation for multi-step team review',
+      'REST Backend API: Node.js, Express, and MongoDB for subscription data persistence'
+    ],
+    results: [
+      'Built production-ready SaaS application with end-to-end audit workflows',
+      'Integrated Groq AI for instant cost recommendations and tool redundancy detection',
+      'Deployed live on Vercel with environment-based configuration'
+    ]
   },
   {
     id: 'campus-chat-engine',
@@ -92,6 +83,25 @@ export const ecosystemProjects = [
     results: ['Sub-100ms message delivery with zero message drop rate.']
   },
   {
+    id: 'college-search-api',
+    title: 'College Search API',
+    subtitle: 'Infrastructure Powering InCampus',
+    category: 'InCampus Infrastructure',
+    eyebrow: 'Core Infrastructure',
+    status: 'Production API',
+    demoUrl: null,
+    githubUrl: 'https://github.com/saquib-sarfaraz',
+    image: null,
+    gradient: 'from-blue-500/20 via-[#090B1A] to-cyan-600/20',
+    accentColor: '#38bdf8',
+    tags: ['Node.js', 'Express', 'MongoDB Atlas', 'Regex Search Index'],
+    overview: 'High-speed autocomplete microservice indexing thousands of global universities for student onboarding search within InCampus.',
+    challenge: 'Ensuring sub-20ms search query response times across thousands of university names with partial prefix matches.',
+    approach: 'Created MongoDB compound text & wildcard indexes with memory-cached frequent query responses.',
+    architecture: ['Compound Regex Text Indexing', 'Express Middleware Rate Limiting'],
+    results: ['Sub-15ms search latency reducing onboarding drop-offs.']
+  },
+  {
     id: 'xyxo',
     title: 'XYXO Game Engine',
     subtitle: 'Real-Time Multiplayer Engine',
@@ -109,6 +119,25 @@ export const ecosystemProjects = [
     approach: 'Implemented server-authoritative move validation with room pairing queues.',
     architecture: ['Dynamic Room Pairing Queue', 'Server Move Validation', 'Minimax Fallback AI'],
     results: ['Instant 50ms turn response with embedded interactive runner.']
+  },
+  {
+    id: 'incampus-help',
+    title: 'InCampus Help',
+    subtitle: 'Verification & Support Portal',
+    category: 'InCampus Ecosystem',
+    eyebrow: 'Support Portal',
+    status: 'Live',
+    demoUrl: 'https://incampus-help.online',
+    githubUrl: 'https://github.com/saquib-sarfaraz',
+    image: null,
+    gradient: 'from-emerald-500/20 via-[#090B1A] to-teal-600/20',
+    accentColor: '#22c55e',
+    tags: ['React', 'Node.js', 'MongoDB', 'Forms Webhook'],
+    overview: 'A dedicated support center centralizing student verification requests, blue tick badge issuances, FAQs, and developer documentation.',
+    challenge: 'Streamlining manual campus identity verification requests while giving users transparent status feedback.',
+    approach: 'Designed a searchable support documentation center connected with webhook form submissions for verification ticket processing.',
+    architecture: ['Searchable Knowledge Index', 'Dynamic Verification Request Queues'],
+    results: ['Automated verification inquiry workflows with 100% policy transparency.']
   }
 ];
 

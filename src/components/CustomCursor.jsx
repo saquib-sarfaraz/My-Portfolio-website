@@ -16,6 +16,8 @@ export default function CustomCursor() {
   const coreDotRef = useRef(null);
   const followerRingRef = useRef(null);
   const scrollTimeoutRef = useRef(null);
+  const currentTypeRef = useRef('default');
+  const currentTextRef = useRef('');
 
   useEffect(() => {
     // 1. Accessibility & Touch Device check
@@ -36,7 +38,7 @@ export default function CustomCursor() {
     const handleMouseMove = (e) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
 
-      // Core dot moves instantly
+      // Core dot moves instantly via GPU transform
       if (coreDotRef.current) {
         coreDotRef.current.style.transform = `translate3d(${e.clientX - 3}px, ${e.clientY - 3}px, 0)`;
       }
@@ -48,33 +50,36 @@ export default function CustomCursor() {
       const heading = target.closest('h1, h2, h3, .hover-text');
       const projectCard = target.closest('.hover-card, [data-cursor-label]');
 
+      let nextType = 'default';
+      let nextText = '';
+
       if (projectCard) {
-        setCursorType('card');
-        const label = projectCard.getAttribute('data-cursor-label') || 'OPEN →';
-        setCursorText(label);
+        nextType = 'card';
+        nextText = projectCard.getAttribute('data-cursor-label') || 'OPEN →';
       } else if (clickableButton) {
-        setCursorType('button');
-        setCursorText('');
+        nextType = 'button';
       } else if (clickableLink) {
-        setCursorType('link');
-        setCursorText('');
+        nextType = 'link';
       } else if (heading) {
-        setCursorType('text');
-        setCursorText('');
-      } else {
-        setCursorType('default');
-        setCursorText('');
+        nextType = 'text';
       }
 
-      // Magnetic Button interaction (gentle 2-4px pull)
+      // Only update state when cursor state actually changes to avoid unnecessary re-renders
+      if (nextType !== currentTypeRef.current || nextText !== currentTextRef.current) {
+        currentTypeRef.current = nextType;
+        currentTextRef.current = nextText;
+        setCursorType(nextType);
+        setCursorText(nextText);
+      }
+
+      // Magnetic Button interaction
       if (clickableButton) {
         const rect = clickableButton.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        const deltaX = (e.clientX - centerX) * 0.15;
-        const deltaY = (e.clientY - centerY) * 0.15;
-        clickableButton.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(1.02)`;
-        clickableButton.style.transition = 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)';
+        const deltaX = (e.clientX - centerX) * 0.12;
+        const deltaY = (e.clientY - centerY) * 0.12;
+        clickableButton.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0)`;
       }
     };
 
@@ -82,16 +87,16 @@ export default function CustomCursor() {
     const handleMouseOut = (e) => {
       const button = e.target.closest('button, [role="button"], .btn-magnetic');
       if (button) {
-        button.style.transform = 'translate3d(0px, 0px, 0) scale(1)';
+        button.style.transform = 'translate3d(0px, 0px, 0)';
       }
     };
 
     const handleMouseDown = () => setIsMouseDown(true);
     const handleMouseUp = () => setIsMouseDown(false);
 
-    // Scroll detection for slight vertical compression
+    // Scroll detection
     const handleScroll = () => {
-      setIsScrolling(true);
+      if (!isScrolling) setIsScrolling(true);
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
       scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 150);
     };
@@ -99,7 +104,7 @@ export default function CustomCursor() {
     // 60 FPS lerp loop for follower ring weighted physics
     let animFrameId;
     const loop = () => {
-      const ease = 0.2; // Spring stiffness factor
+      const ease = 0.22;
       followerPos.current.x += (mousePos.current.x - followerPos.current.x) * ease;
       followerPos.current.y += (mousePos.current.y - followerPos.current.y) * ease;
 
@@ -110,11 +115,11 @@ export default function CustomCursor() {
       animFrameId = requestAnimationFrame(loop);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseout', handleMouseOut);
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseout', handleMouseOut, { passive: true });
+    window.addEventListener('mousedown', handleMouseDown, { passive: true });
+    window.addEventListener('mouseup', handleMouseUp, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
     loop();
 
     return () => {

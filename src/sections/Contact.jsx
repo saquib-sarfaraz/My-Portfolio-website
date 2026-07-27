@@ -60,13 +60,19 @@ export default function Contact() {
         <RecruiterDashboard />
 
         {/* Contact Form & Messaging Card */}
-        <div className="max-w-4xl mx-auto p-8 sm:p-10 rounded-3xl glass-card border border-white/20 space-y-8 shadow-[0_20px_60px_rgba(56,189,248,0.2)]">
+        <motion.div
+          initial={{ opacity: 0, y: 32, filter: 'blur(12px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-4xl mx-auto p-8 sm:p-10 rounded-3xl glass-card border border-white/20 space-y-8 shadow-[0_20px_60px_rgba(56,189,248,0.2)]"
+        >
           <div className="text-center space-y-2">
             <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/10 text-sky-400 text-xs font-mono uppercase tracking-widest border border-white/15 shadow-sm">
               <Mail className="w-4 h-4 text-sky-400" /> Direct Channel
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Let's Build Something Together
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-sans">
+              Let's Build Something <span className="text-sky-400">Together</span>
             </h2>
             <p className="text-slate-200 text-sm max-w-md mx-auto font-mono">
               Open for full stack roles, technical projects, and engineering collaborations.
@@ -130,10 +136,13 @@ export default function Contact() {
               </div>
             )}
 
-            <button
+            <motion.button
               type="submit"
               disabled={isSending}
-              className="w-full py-3.5 rounded-xl bg-white text-black font-extrabold text-xs hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-50"
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+              className="w-full py-3.5 rounded-xl bg-white text-black font-extrabold text-xs hover:bg-slate-200 transition-all flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 cursor-pointer"
             >
               {isSending ? (
                 <>
@@ -151,9 +160,9 @@ export default function Contact() {
                   <span>Send Direct Message</span>
                 </>
               )}
-            </button>
+            </motion.button>
           </form>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

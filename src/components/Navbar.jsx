@@ -10,34 +10,42 @@ export default function Navbar({ onOpenCommandPalette }) {
   const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
+    const sections = ['workspace', 'about', 'journey', 'projects', 'skills', 'experience', 'contact'];
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
 
-      const sections = ['hero', 'about', 'journey', 'architecture', 'skills', 'experience', 'projects', 'contact'];
-      for (const section of sections) {
-        const el = document.getElementById(section);
+      const viewportHeight = window.innerHeight;
+      const scrollPosition = window.scrollY + viewportHeight * 0.35;
+
+      let currentSection = sections[0];
+
+      for (const id of sections) {
+        const el = document.getElementById(id);
         if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 200 && rect.bottom >= 200) {
-            setActiveSection(section);
-            break;
+          const top = el.offsetTop;
+          if (scrollPosition >= top - 100) {
+            currentSection = id;
           }
         }
       }
+
+      setActiveSection(currentSection);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { id: 'hero', label: 'Workspace' },
+    { id: 'workspace', label: 'Workspace' },
     { id: 'about', label: 'About' },
     { id: 'journey', label: 'Journey' },
-    { id: 'architecture', label: 'Architecture' },
+    { id: 'projects', label: 'Projects' },
     { id: 'skills', label: 'Skills' },
     { id: 'experience', label: 'Experience' },
-    { id: 'projects', label: 'Products' },
     { id: 'contact', label: 'Contact' },
   ];
 
