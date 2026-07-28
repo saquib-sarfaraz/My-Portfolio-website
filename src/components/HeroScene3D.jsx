@@ -31,13 +31,13 @@ export default function HeroScene3D() {
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x0a0f1d, 0.025);
 
-    const width = currentMount.clientWidth;
-    const height = currentMount.clientHeight;
+    const width = currentMount.clientWidth || window.innerWidth;
+    const height = currentMount.clientHeight || 600;
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
     // Camera naturally frames upper body, desk, monitors, keyboard, face
     camera.position.set(0, 1.45, 5.2);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'default' });
     renderer.setSize(width, height);
     // Optimize pixel ratio & shadow maps for smooth mobile/desktop 60 FPS
     const maxDpr = isMobile ? 1.0 : 1.25;
@@ -47,6 +47,21 @@ export default function HeroScene3D() {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     currentMount.appendChild(renderer.domElement);
+
+    // Context loss listeners
+    const handleContextLost = (e) => {
+      e.preventDefault();
+      console.warn('WebGL context lost on HeroScene3D');
+    };
+
+    const handleContextRestored = () => {
+      console.log('WebGL context restored on HeroScene3D');
+      handleResize();
+    };
+
+    const canvasDom = renderer.domElement;
+    canvasDom.addEventListener('webglcontextlost', handleContextLost, false);
+    canvasDom.addEventListener('webglcontextrestored', handleContextRestored, false);
 
     // Visibility Observer to pause rendering loop when off-screen
     let isVisible = true;
@@ -528,7 +543,7 @@ export default function HeroScene3D() {
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
-      if (!isVisible) return; // Skip calculation & rendering when canvas is scrolled out of view
+      if (!isVisible) return; // Keep loop scheduled via animId above, skip draw calculation when offscreen
 
       const elapsedTime = clock.getElapsedTime();
 
@@ -584,23 +599,50 @@ export default function HeroScene3D() {
       if (!currentMount) return;
       const newW = currentMount.clientWidth;
       const newH = currentMount.clientHeight;
+      if (newW === 0 || newH === 0) return;
       camera.aspect = newW / newH;
       camera.updateProjectionMatrix();
       renderer.setSize(newW, newH);
     };
 
     window.addEventListener('resize', handleResize);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize);
+    }
 
     return () => {
       cancelAnimationFrame(animId);
       observer.disconnect();
+      canvasDom.removeEventListener('webglcontextlost', handleContextLost);
+      canvasDom.removeEventListener('webglcontextrestored', handleContextRestored);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleResize);
+      }
+
+      // Complete GPU memory cleanup to prevent mobile memory leaks
+      scene.traverse((obj) => {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) {
+          if (Array.isArray(obj.material)) {
+            obj.material.forEach((m) => m.dispose());
+          } else {
+            obj.material.dispose();
+          }
+        }
+      });
+
+      mainTexture.dispose();
+      secTexture.dispose();
+
       if (currentMount && renderer.domElement) {
         currentMount.removeChild(renderer.domElement);
       }
+      renderer.dispose();
+      renderer.forceContextLoss();
       scene.clear();
     };
   }, [isMobile]);

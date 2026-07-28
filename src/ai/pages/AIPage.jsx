@@ -52,7 +52,9 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
     if (typeof window === 'undefined' || !window.visualViewport) return;
 
     const handleResize = () => {
-      setViewportHeight(window.visualViewport.height);
+      const vh = window.visualViewport.height;
+      setViewportHeight(vh);
+      document.documentElement.style.setProperty('--vvh', `${vh}px`);
     };
 
     handleResize();
@@ -63,6 +65,7 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
     return () => {
       window.visualViewport.removeEventListener('resize', handleResize);
       window.visualViewport.removeEventListener('scroll', handleResize);
+      document.documentElement.style.removeProperty('--vvh');
     };
   }, []);
 
@@ -171,7 +174,7 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
   return (
     <div
       className="fixed inset-0 z-[120] bg-[#040814] text-white flex flex-col justify-between overflow-hidden text-left font-sans w-screen"
-      style={{ height: viewportHeight ? `${viewportHeight}px` : '100dvh' }}
+      style={{ height: viewportHeight ? `${viewportHeight}px` : 'var(--vvh, 100dvh)' }}
     >
       {/* Volumetric Ambient Lighting */}
       <div className="absolute top-1/6 left-1/4 w-[600px] h-[600px] rounded-full bg-sky-500/10 blur-[180px] pointer-events-none" />
@@ -300,6 +303,11 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
               type="text"
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
+              onFocus={() => {
+                setTimeout(() => {
+                  inputRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }, 300);
+              }}
               placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
               disabled={isThinking}
               className="w-full pl-12 pr-14 py-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 font-mono text-sm focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-all shadow-xl"

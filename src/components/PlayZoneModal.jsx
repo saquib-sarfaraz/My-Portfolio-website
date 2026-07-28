@@ -133,7 +133,7 @@ export default function PlayZoneModal({ isOpen, onClose }) {
     <AnimatePresence>
       <div
         data-lenis-prevent
-        className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/80 backdrop-blur-2xl overflow-y-auto text-left font-sans safe-area-inset"
+        className="fixed inset-0 z-[150] flex items-center justify-center p-2 sm:p-6 bg-black/80 backdrop-blur-2xl overflow-y-auto text-left font-sans safe-area-inset"
       >
         
         {/* Main OS Window Container */}
