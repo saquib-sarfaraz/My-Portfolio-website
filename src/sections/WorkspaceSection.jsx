@@ -40,7 +40,7 @@ export default function WorkspaceSection() {
 
 export const saquib: Developer = {
   name: "${profileData.name}",
-  role: "Full Stack & AI Systems Engineer",
+  role: "Full Stack Developer",
   education: "B.Tech CSE • Jamia Hamdard",
   stack: ["React 19", "Node.js", "MongoDB", "TypeScript", "Python", "Socket.io", "Next.js"],
   status: "${profileData.status}"
@@ -172,7 +172,7 @@ export const saquib: Developer = {
                 <div>&nbsp;</div>
                 <div><span className="text-purple-400">export const</span> <span className="text-sky-300">saquib</span>: <span className="text-yellow-300">Developer</span> = &#123;</div>
                 <div>&nbsp;&nbsp;<span className="text-slate-400">name:</span> <span className="text-emerald-300">"{profileData.name}"</span>,</div>
-                <div>&nbsp;&nbsp;<span className="text-slate-400">role:</span> <span className="text-emerald-300">"Full Stack & AI Systems Engineer"</span>,</div>
+                <div>&nbsp;&nbsp;<span className="text-slate-400">role:</span> <span className="text-emerald-300">"Full Stack Developer"</span>,</div>
                 <div>&nbsp;&nbsp;<span className="text-slate-400">education:</span> <span className="text-emerald-300">"B.Tech CSE • Jamia Hamdard"</span>,</div>
                 <div>&nbsp;&nbsp;<span className="text-slate-400">stack:</span> [<span className="text-emerald-300">"React 19"</span>, <span className="text-emerald-300">"Node.js"</span>, <span className="text-emerald-300">"MongoDB"</span>, <span className="text-emerald-300">"TypeScript"</span>, <span className="text-emerald-300">"Python"</span>, <span className="text-emerald-300">"Socket.io"</span>, <span className="text-emerald-300">"Next.js"</span>],</div>
                 <div>&nbsp;&nbsp;<span className="text-slate-400">status:</span> <span className="text-emerald-400">"{profileData.status}"</span></div>

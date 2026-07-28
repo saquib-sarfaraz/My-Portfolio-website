@@ -54,7 +54,7 @@ function isRateLimited(ip) {
 // ⚡ STATIC PROFILE DATA FOR INSTANT PRE-LLM RESPONSE
 const PORTFOLIO_PROFILE = {
   name: "Saquib Sarfaraz",
-  title: "Full Stack Developer & AI Systems Engineer",
+  title: "Full Stack Developer",
   education: "B.Tech Computer Science Engineering student at Jamia Hamdard, New Delhi (2023 - 2027)",
   location: "New Delhi, India (Open to Remote & Relocation)",
   email: "saquibsarfaraz47@gmail.com",
