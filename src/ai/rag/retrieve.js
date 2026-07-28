@@ -50,10 +50,11 @@ export function retrieveKnowledge(query = '', history = []) {
     }
   }
 
-  if (matches('project', 'build', 'built', 'work', 'code', 'repo', 'github', 'saas')) {
+  if (matches('project', 'build', 'built', 'work', 'code', 'repo', 'github', 'saas', 'where can i see', 'show projects', 'see projects')) {
     if (!matchedSources.has('Projects')) {
       retrievedSections.push({ title: 'Portfolio Projects', data: projectsData });
       matchedSources.add('Projects');
+      suggestedActions.push({ type: 'scroll', target: 'projects', label: 'Explore All Projects' });
     }
   }
 
@@ -71,9 +72,9 @@ export function retrieveKnowledge(query = '', history = []) {
     suggestedActions.push({ type: 'scroll', target: 'skills', label: 'View Skills Section' });
   }
 
-  // 4. Contact & Resume matching
-  if (matches('contact', 'hire', 'email', 'touch', 'reach', 'linkedin', 'github', 'message')) {
-    retrievedSections.push({ title: 'Contact Information', data: contactData });
+  // 4. Contact & Social Profiles matching (Expanded for 100% precision)
+  if (matches('contact', 'hire', 'email', 'touch', 'reach', 'linkedin', 'github', 'instagram', 'social', 'phone', 'mail', 'connect', 'message', 'website', 'portfolio')) {
+    retrievedSections.push({ title: 'Contact & Social Profiles', data: contactData });
     matchedSources.add('Contact');
     suggestedActions.push(...(contactData.actions || []));
   }
@@ -84,24 +85,15 @@ export function retrieveKnowledge(query = '', history = []) {
     suggestedActions.push(...(resumeData.actions || []));
   }
 
-  // Fallback: If query didn't trigger specific filters, include core bio & project highlights
-  if (retrievedSections.length === 0) {
-    retrievedSections.push(
-      { title: 'About Saquib Sarfaraz', data: aboutData },
-      { title: 'Featured Projects', data: projectsData.slice(0, 2) },
-      { title: 'Current Experience', data: experienceData.slice(0, 2) }
-    );
-    matchedSources.add('About');
-    matchedSources.add('Projects');
-    matchedSources.add('Experience');
-    suggestedActions.push({ type: 'scroll', target: 'projects', label: 'Explore All Projects' });
-  }
+  // Always include static profile metadata so LLM context is rich
+  retrievedSections.push({ title: 'Static Profile Info', data: aboutData });
+  matchedSources.add('About');
 
-  // Deduplicate actions by label/type
+  // Deduplicate actions by type/id/url
   const uniqueActions = [];
   const actionKeys = new Set();
   for (const act of suggestedActions) {
-    const key = `${act.type}:${act.id || act.target || act.url || act.gameId}`;
+    const key = `${act.type}:${act.id || act.target || act.url || act.label}`;
     if (!actionKeys.has(key)) {
       actionKeys.add(key);
       uniqueActions.push(act);

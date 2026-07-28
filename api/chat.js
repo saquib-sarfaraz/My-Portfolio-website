@@ -31,7 +31,7 @@ const rateLimitMap = new Map();
 
 // Helper to clean up cache entries older than 5 minutes
 const CACHE_TTL_MS = 5 * 60 * 1000;
-const RATE_LIMIT_MAX = 20; // 20 requests per minute per IP
+const RATE_LIMIT_MAX = 30; // 30 requests per minute per IP
 
 function isRateLimited(ip) {
   const now = Date.now();
@@ -49,6 +49,104 @@ function isRateLimited(ip) {
   userRecord.count += 1;
   rateLimitMap.set(ip, userRecord);
   return false;
+}
+
+// ⚡ STATIC PROFILE DATA FOR INSTANT PRE-LLM RESPONSE
+const PORTFOLIO_PROFILE = {
+  name: "Saquib Sarfaraz",
+  title: "Full Stack Developer & AI Systems Engineer",
+  education: "B.Tech Computer Science Engineering student at Jamia Hamdard, New Delhi (2023 - 2027)",
+  location: "New Delhi, India (Open to Remote & Relocation)",
+  email: "saquibsarfaraz47@gmail.com",
+  github: "https://github.com/saquib-sarfaraz",
+  linkedin: "https://www.linkedin.com/in/saquib-sarfaraz-1691b9292/",
+  instagram: "https://www.instagram.com/saquib.sarfaraz?igsh=MTB0ZWdlbWZnMTQ1dA==",
+  website: "https://saquib-sarfaraz.vercel.app",
+  resume: "/saquib-cv.pdf",
+  currentInternship: "Full Stack Developer Intern at WonderKids Club (June 2026 – August 2026)",
+  flagshipSaaS: "InCampus (https://incampus.online)",
+  aiSaaS: "AI Spend Audit (https://ai-audit-lilac.vercel.app)"
+};
+
+// ⚡ INSTANT STATIC RESPONSE ROUTER (0 Token Cost, 100% Accurate)
+function checkStaticQuery(query) {
+  const q = (query || '').toLowerCase().trim();
+
+  // 1. LinkedIn query
+  if (q.includes('linkedin')) {
+    return {
+      message: `You can connect with Saquib on **LinkedIn**:\n\n💼 [LinkedIn Profile](${PORTFOLIO_PROFILE.linkedin})\n\nFeel free to send a connection request or message!`,
+      sources: ['Contact', 'LinkedIn'],
+      actions: [
+        { type: 'external', url: PORTFOLIO_PROFILE.linkedin, label: 'Open LinkedIn Profile' },
+        { type: 'external', url: `mailto:${PORTFOLIO_PROFILE.email}`, label: 'Send Direct Email' }
+      ]
+    };
+  }
+
+  // 2. GitHub query
+  if (q.includes('github') || q.includes('repo') || q.includes('repositories')) {
+    return {
+      message: `Explore Saquib's open-source projects, repositories, and active code commits on **GitHub**:\n\n💻 [GitHub Profile](${PORTFOLIO_PROFILE.github})`,
+      sources: ['Contact', 'GitHub'],
+      actions: [
+        { type: 'external', url: PORTFOLIO_PROFILE.github, label: 'Open GitHub Profile' },
+        { type: 'scroll', target: 'projects', label: 'View Portfolio Projects' }
+      ]
+    };
+  }
+
+  // 3. Instagram query
+  if (q.includes('instagram') || q.includes('insta')) {
+    return {
+      message: `Follow Saquib on **Instagram**:\n\n📷 [Instagram Profile](${PORTFOLIO_PROFILE.instagram})`,
+      sources: ['Contact', 'Instagram'],
+      actions: [
+        { type: 'external', url: PORTFOLIO_PROFILE.instagram, label: 'Open Instagram Profile' }
+      ]
+    };
+  }
+
+  // 4. Contact / How to reach query
+  if (q.includes('contact') || q.includes('reach') || q.includes('touch') || q.includes('email') || q.includes('mail') || q.includes('phone') || q.includes('social')) {
+    return {
+      message: `Here is how you can directly contact and connect with **Saquib Sarfaraz**:\n\n📧 **Email**: [${PORTFOLIO_PROFILE.email}](mailto:${PORTFOLIO_PROFILE.email})\n💼 **LinkedIn**: [linkedin.com/in/saquib-sarfaraz](https://www.linkedin.com/in/saquib-sarfaraz-1691b9292/)\n💻 **GitHub**: [github.com/saquib-sarfaraz](https://github.com/saquib-sarfaraz)\n📷 **Instagram**: [instagram.com/saquib.sarfaraz](https://www.instagram.com/saquib.sarfaraz?igsh=MTB0ZWdlbWZnMTQ1dA==)\n📍 **Location**: ${PORTFOLIO_PROFILE.location}`,
+      sources: ['Contact', 'Socials'],
+      actions: [
+        { type: 'external', url: `mailto:${PORTFOLIO_PROFILE.email}`, label: 'Send Direct Email' },
+        { type: 'external', url: PORTFOLIO_PROFILE.linkedin, label: 'Open LinkedIn' },
+        { type: 'external', url: PORTFOLIO_PROFILE.github, label: 'Open GitHub' },
+        { type: 'scroll', target: 'contact', label: 'Go to Contact Form' }
+      ]
+    };
+  }
+
+  // 5. Resume / CV query
+  if (q.includes('resume') || q.includes('cv') || q.includes('download resume')) {
+    return {
+      message: `View and download Saquib's official resume PDF:\n\n📄 [Download Resume PDF](${PORTFOLIO_PROFILE.resume})\n\nIt details his education at Jamia Hamdard, WonderKids Club internship, full-stack technologies, and production SaaS projects.`,
+      sources: ['Resume'],
+      actions: [
+        { type: 'resume', url: PORTFOLIO_PROFILE.resume, label: 'Download Resume PDF' },
+        { type: 'scroll', target: 'experience', label: 'View Experience' }
+      ]
+    };
+  }
+
+  // 6. Projects location query
+  if (q.includes('where can i see your projects') || q.includes('see your projects') || q.includes('show projects')) {
+    return {
+      message: `You can explore all of Saquib's live projects directly on this portfolio:\n\n🚀 **InCampus SaaS**: Live university social network at [incampus.online](https://incampus.online)\n💡 **AI Spend Audit**: Groq AI SaaS subscription optimizer live at [ai-audit-lilac.vercel.app](https://ai-audit-lilac.vercel.app)\n🎮 **XYXO Game**: Realtime multiplayer game in the Play Zone`,
+      sources: ['Projects'],
+      actions: [
+        { type: 'scroll', target: 'projects', label: 'Explore Projects Section' },
+        { type: 'external', url: 'https://incampus.online', label: 'Visit InCampus' },
+        { type: 'external', url: 'https://ai-audit-lilac.vercel.app', label: 'Visit AI Spend Audit' }
+      ]
+    };
+  }
+
+  return null;
 }
 
 export default async function handler(req, res) {
@@ -83,9 +181,23 @@ export default async function handler(req, res) {
   }
 
   const trimmedQuery = query.trim();
+
+  // ⚡ 3. INSTANT STATIC PRE-LLM CHECK
+  const staticResult = checkStaticQuery(trimmedQuery);
+  if (staticResult) {
+    console.log("Serving instant pre-LLM static profile answer for:", trimmedQuery);
+    return res.status(200).json({
+      fallback: false,
+      staticMatch: true,
+      sources: staticResult.sources,
+      actions: staticResult.actions,
+      message: staticResult.message
+    });
+  }
+
   const cacheKey = trimmedQuery.toLowerCase();
 
-  // 3. Cache Check (Returns instant response for repeated questions within 5 minutes)
+  // 4. Cache Check (Returns instant response for repeated questions within 5 minutes)
   const cached = responseCache.get(cacheKey);
   if (cached && (Date.now() - cached.timestamp < CACHE_TTL_MS)) {
     console.log("Serving cached AI response for:", cacheKey);
@@ -101,27 +213,39 @@ export default async function handler(req, res) {
   const apiKey = getApiKey();
   console.log("API KEY STATUS:", apiKey ? `FOUND (${apiKey.substring(0, 7)}...)` : "MISSING");
 
-  // 4. Structured Portfolio Context with 12,000 char size limit
+  // 5. Structured Portfolio Context with 12,000 char size limit
   const contextCapped = JSON.stringify(retrievedContext || {}).slice(0, 12000);
 
+  // ⚡ INJECTED PORTFOLIO OWNER PROFILE INTO SYSTEM PROMPT
   const systemPrompt = `You are Saquib AI, an intelligent conversational guide for Saquib Sarfaraz's portfolio (Saquib OS).
-Your only purpose is to answer questions about Saquib Sarfaraz. You speak naturally as Saquib in the first person ("I", "my flagship project", "my internship").
+Your purpose is to answer questions about Saquib Sarfaraz. You speak naturally as Saquib in the first person ("I", "my flagship project", "my internship").
 
-# PORTFOLIO KNOWLEDGE CONTEXT:
+# PORTFOLIO OWNER PROFILE (STATIC FACTS - ALWAYS ALWAYS USE THIS DATA):
+- Name: ${PORTFOLIO_PROFILE.name}
+- Title: ${PORTFOLIO_PROFILE.title}
+- Education: ${PORTFOLIO_PROFILE.education}
+- Location: ${PORTFOLIO_PROFILE.location}
+- Direct Email: ${PORTFOLIO_PROFILE.email}
+- LinkedIn: ${PORTFOLIO_PROFILE.linkedin}
+- GitHub: ${PORTFOLIO_PROFILE.github}
+- Instagram: ${PORTFOLIO_PROFILE.instagram}
+- Official Website: ${PORTFOLIO_PROFILE.website}
+- Resume PDF Download: ${PORTFOLIO_PROFILE.resume}
+- Active Internship: ${PORTFOLIO_PROFILE.currentInternship}
+- Flagship SaaS Product: ${PORTFOLIO_PROFILE.flagshipSaaS}
+- AI SaaS Product: ${PORTFOLIO_PROFILE.aiSaaS}
+
+# RETRIEVED KNOWLEDGE CONTEXT:
 ${contextCapped}
 
 # STRICT CONVERSATIONAL RULES:
-1. Answer the user's question directly and immediately.
-2. DO NOT repeatedly introduce yourself. DO NOT start responses with "Hi! I'm Saquib Sarfaraz" unless the user explicitly asks "Who are you?" or "Tell me about yourself".
-3. DO NOT answer like a resume or CV. NEVER write formal headings like "Production Track Record:", "Industry Ready:", or "Why Hire Saquib:".
-4. Write fluid, natural, human paragraphs like a real engineer having a conversation with a recruiter.
-5. When discussing a project:
-   - Explain why it was built and what practical problem it solves.
-   - Explain what makes it interesting or special.
-   - Mention technologies naturally within the narrative.
+1. If the user asks for LinkedIn, GitHub, Instagram, Email, Contact details, Resume, Website, or Projects, ALWAYS provide the exact URLs/links from the PORTFOLIO OWNER PROFILE above. NEVER say "I don't have that information".
+2. Answer the user's question directly and immediately.
+3. DO NOT repeatedly introduce yourself. DO NOT start responses with "Hi! I'm Saquib Sarfaraz" unless the user explicitly asks "Who are you?" or "Tell me about yourself".
+4. DO NOT answer like a resume or CV. NEVER write formal headings like "Production Track Record:", "Industry Ready:", or "Why Hire Saquib:".
+5. Write fluid, natural, human paragraphs like a real engineer having a conversation with a recruiter.
 6. Avoid repeating information from previous messages in the conversation.
-7. Use ONLY the provided portfolio knowledge context above. Never pretend to know unlisted details.
-8. If asked general knowledge questions unrelated to Saquib Sarfaraz (e.g., "Who is Elon Musk?"), respond EXACTLY with:
+7. If asked general knowledge questions completely unrelated to Saquib Sarfaraz (e.g., "Who is Elon Musk?"), respond EXACTLY with:
 "I'm designed to answer questions about Saquib Sarfaraz, including my projects, experience, skills, achievements, and portfolio. I can't answer general knowledge questions."`;
 
   if (!apiKey) {
@@ -134,12 +258,12 @@ ${contextCapped}
     });
   }
 
-  // 5. AbortController 20-Second Request Timeout
+  // 6. AbortController 20-Second Request Timeout
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 20000);
 
   try {
-    // 6. Strict Message History Sanitization (sending only role & content)
+    // 7. Strict Message History Sanitization (sending only role & content)
     const cleanedHistory = messages
       .slice(-8)
       .filter((m) => m && m.role && m.content)
@@ -185,7 +309,6 @@ ${contextCapped}
       const errText = await response.text();
       console.error("LLM API Error Response Body:", response.status, errText);
 
-      // Mask raw error body in production, return safe user message
       return res.status(response.status).json({
         fallback: true,
         error: process.env.NODE_ENV === 'development' ? errText : 'AI service temporarily unavailable.',
@@ -231,6 +354,12 @@ ${contextCapped}
 function generateFallbackReply(query, context) {
   const q = (query || '').toLowerCase().trim();
 
+  // Instant static fallback check
+  const staticMatch = checkStaticQuery(q);
+  if (staticMatch) {
+    return staticMatch.message;
+  }
+
   // General knowledge refusal check
   const generalKnowledgeKeywords = ['elon musk', 'who is', 'capital of', 'weather', 'recipe', 'president', 'movie', 'song', 'crypto', 'bitcoin'];
   const isGeneralQuery = generalKnowledgeKeywords.some((kw) => q.includes(kw)) && !q.includes('saquib') && !q.includes('incampus') && !q.includes('wonderkids');
@@ -244,11 +373,11 @@ function generateFallbackReply(query, context) {
   }
 
   if (q.includes('best project') || q.includes('strongest project') || q.includes('incampus')) {
-    return `If I had to pick one project that best represents my skills, it would be **InCampus** (Live at [incampus.online](https://incampus.online)).\n\nInCampus is a private campus social platform that I built to make it easier for university students to connect, communicate, and share updates within their college community. It includes secure OAuth identity verification, real-time 1-to-1 messaging with sub-100ms latency, media uploads, and isolated campus feeds.\n\nWhat makes this project special isn't just the features—it's that I approached it like a real product. I focused on scalability, data privacy boundaries, and user experience instead of building a simple demo application.\n\nThrough this project, I gained deep hands-on experience with React 19, Node.js, Express, MongoDB Atlas aggregation pipelines, JWT authentication, Socket.io, Cloudinary CDN, and production deployment workflows.`;
+    return `If I had to pick one project that best represents my skills, it would be **InCampus** (Live at [incampus.online](https://incampus.online)).\n\nInCampus is a private campus social platform that I built to make it easier for university students to connect, communicate, and share updates within their college community. It includes secure OAuth identity verification, real-time 1-to-1 messaging with sub-100ms latency, media uploads, and isolated campus feeds.\n\nThrough this project, I gained deep hands-on experience with React 19, Node.js, Express, MongoDB Atlas aggregation pipelines, JWT authentication, Socket.io, Cloudinary CDN, and production deployment workflows.`;
   }
 
   if (q.includes('ai') || q.includes('spend') || q.includes('audit')) {
-    return `I built **AI Spend Audit** (Live at [ai-audit-lilac.vercel.app](https://ai-audit-lilac.vercel.app)) to solve a real problem development teams face: tracking and optimizing overlapping AI tool subscriptions.\n\nThe platform integrates the Groq AI LLM engine to automatically analyze subscription data, identify seat redundancies, recommend cost-saving optimizations, and generate shareable audit reports. It was built using React, TypeScript, Node.js, Express, MongoDB, and Tailwind CSS.`;
+    return `I built **AI Spend Audit** (Live at [ai-audit-lilac.vercel.app](https://ai-audit-lilac.vercel.app)) to solve a real problem development teams face: tracking and optimizing overlapping AI tool subscriptions.\n\nThe platform integrates the Groq AI LLM engine to automatically analyze subscription data, identify seat redundancies, recommend cost-saving optimizations, and generate shareable audit reports.`;
   }
 
   if (q.includes('wonderkids') || q.includes('intern') || q.includes('experience') || q.includes('work')) {
@@ -260,7 +389,7 @@ function generateFallbackReply(query, context) {
   }
 
   if (q.includes('hire') || q.includes('why')) {
-    return `I enjoy building products that people can actually use. Rather than focusing only on academic projects, I've spent my time developing production-ready applications, experimenting with AI integrations, and working on real-world features during my internship at WonderKids Club.\n\nI learn quickly, take full ownership of my work, and pay close attention to user experience. Whether it's building a real-time application, designing a polished interface, or solving backend problems, I like understanding the complete product rather than just writing code.`;
+    return `I enjoy building products that people can actually use. Rather than focusing only on academic projects, I've spent my time developing production-ready applications, experimenting with AI integrations, and working on real-world features during my internship at WonderKids Club.\n\nI learn quickly, take full ownership of my work, and pay close attention to user experience.`;
   }
 
   if (q.includes('who are you') || q.includes('tell me about saquib') || q.includes('about yourself')) {

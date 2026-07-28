@@ -1,7 +1,100 @@
 import { retrieveKnowledge } from '../rag/retrieve';
+import { profileData } from '../../content/profile';
+
+// Static answer router for client-side instant responses
+function checkStaticClientQuery(query) {
+  const q = (query || '').toLowerCase().trim();
+
+  // 1. LinkedIn query
+  if (q.includes('linkedin')) {
+    return {
+      text: `You can connect with Saquib on **LinkedIn**:\n\n💼 [LinkedIn Profile](${profileData.socials.linkedin})\n\nFeel free to send a connection request or message!`,
+      sources: ['Contact', 'LinkedIn'],
+      actions: [
+        { type: 'external', url: profileData.socials.linkedin, label: 'Open LinkedIn Profile' },
+        { type: 'external', url: `mailto:${profileData.socials.email}`, label: 'Send Direct Email' }
+      ]
+    };
+  }
+
+  // 2. GitHub query
+  if (q.includes('github') || q.includes('repo') || q.includes('repositories')) {
+    return {
+      text: `Explore Saquib's open-source projects, repositories, and active code commits on **GitHub**:\n\n💻 [GitHub Profile](${profileData.socials.github})`,
+      sources: ['Contact', 'GitHub'],
+      actions: [
+        { type: 'external', url: profileData.socials.github, label: 'Open GitHub Profile' },
+        { type: 'scroll', target: 'projects', label: 'View Portfolio Projects' }
+      ]
+    };
+  }
+
+  // 3. Instagram query
+  if (q.includes('instagram') || q.includes('insta')) {
+    return {
+      text: `Follow Saquib on **Instagram**:\n\n📷 [Instagram Profile](${profileData.socials.instagram})`,
+      sources: ['Contact', 'Instagram'],
+      actions: [
+        { type: 'external', url: profileData.socials.instagram, label: 'Open Instagram Profile' }
+      ]
+    };
+  }
+
+  // 4. Contact / How to reach query
+  if (q.includes('contact') || q.includes('reach') || q.includes('touch') || q.includes('email') || q.includes('mail') || q.includes('phone') || q.includes('social')) {
+    return {
+      text: `Here is how you can directly contact and connect with **Saquib Sarfaraz**:\n\n📧 **Email**: [${profileData.socials.email}](mailto:${profileData.socials.email})\n💼 **LinkedIn**: [linkedin.com/in/saquib-sarfaraz](https://www.linkedin.com/in/saquib-sarfaraz-1691b9292/)\n💻 **GitHub**: [github.com/saquib-sarfaraz](https://github.com/saquib-sarfaraz)\n📷 **Instagram**: [instagram.com/saquib.sarfaraz](https://www.instagram.com/saquib.sarfaraz?igsh=MTB0ZWdlbWZnMTQ1dA==)\n📍 **Location**: ${profileData.location}`,
+      sources: ['Contact', 'Socials'],
+      actions: [
+        { type: 'external', url: `mailto:${profileData.socials.email}`, label: 'Send Direct Email' },
+        { type: 'external', url: profileData.socials.linkedin, label: 'Open LinkedIn' },
+        { type: 'external', url: profileData.socials.github, label: 'Open GitHub' },
+        { type: 'scroll', target: 'contact', label: 'Go to Contact Form' }
+      ]
+    };
+  }
+
+  // 5. Resume / CV query
+  if (q.includes('resume') || q.includes('cv') || q.includes('download resume')) {
+    return {
+      text: `View and download Saquib's official resume PDF:\n\n📄 [Download Resume PDF](${profileData.resumeUrl})\n\nIt details his education at Jamia Hamdard, WonderKids Club internship, full-stack technologies, and production SaaS projects.`,
+      sources: ['Resume'],
+      actions: [
+        { type: 'resume', url: profileData.resumeUrl, label: 'Download Resume PDF' },
+        { type: 'scroll', target: 'experience', label: 'View Experience' }
+      ]
+    };
+  }
+
+  // 6. Projects location query
+  if (q.includes('where can i see your projects') || q.includes('see your projects') || q.includes('show projects')) {
+    return {
+      text: `You can explore all of Saquib's live projects directly on this portfolio:\n\n🚀 **InCampus**: Flagship University Social SaaS live at [incampus.online](https://incampus.online)\n💡 **AI Spend Audit**: Groq AI SaaS subscription optimizer live at [ai-audit-lilac.vercel.app](https://ai-audit-lilac.vercel.app)\n🎮 **XYXO Game**: Realtime multiplayer game in the Play Zone`,
+      sources: ['Projects'],
+      actions: [
+        { type: 'scroll', target: 'projects', label: 'Explore Projects Section' },
+        { type: 'external', url: 'https://incampus.online', label: 'Visit InCampus' },
+        { type: 'external', url: 'https://ai-audit-lilac.vercel.app', label: 'Visit AI Spend Audit' }
+      ]
+    };
+  }
+
+  return null;
+}
 
 export async function sendChatMessage({ messages, query }) {
-  // 1. Local RAG Retrieval with multi-turn conversation history
+  // ⚡ 1. Pre-LLM Client Static Matcher (Instant 0-latency response)
+  const staticResponse = checkStaticClientQuery(query);
+  if (staticResponse) {
+    return {
+      text: staticResponse.text,
+      sources: staticResponse.sources,
+      actions: staticResponse.actions,
+      fallback: false
+    };
+  }
+
+  // 2. Local RAG Retrieval with multi-turn conversation history
   const retrievedContext = retrieveKnowledge(query, messages);
 
   try {
@@ -30,7 +123,7 @@ export async function sendChatMessage({ messages, query }) {
     console.warn('Network call to /api/chat failed, utilizing client-side RAG fallback:', err);
   }
 
-  // Client-side fallback if server endpoint is unreachable (e.g. running local Vite dev server without Vercel CLI)
+  // Client-side fallback if server endpoint is unreachable
   const fallbackMessage = generateLocalFallbackText(query, retrievedContext);
   return {
     text: fallbackMessage,
