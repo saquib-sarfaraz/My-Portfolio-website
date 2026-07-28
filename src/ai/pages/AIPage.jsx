@@ -212,8 +212,13 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
             transition={{ duration: 0.6 }}
             className="text-center py-12 space-y-6 max-w-xl mx-auto"
           >
-            <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-sky-400 via-purple-500 to-emerald-400 mx-auto flex items-center justify-center text-white text-2xl shadow-2xl shadow-sky-500/20">
-              ✨
+            <div className="relative w-20 h-20 mx-auto">
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-sky-400 via-purple-500 to-emerald-400 opacity-80 blur-xl animate-pulse" />
+              <img
+                src="/ai-search-logo.png"
+                alt="AI Search Logo"
+                className="relative w-20 h-20 rounded-3xl object-cover border border-sky-400/50 shadow-2xl shadow-sky-500/30 mx-auto"
+              />
             </div>
 
             <div className="space-y-2">
