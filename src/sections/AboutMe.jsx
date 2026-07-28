@@ -16,15 +16,15 @@ function WordHighlightParagraph({ text }) {
   const clipPath = useTransform(clipRight, (val) => `inset(0 ${val}% 0 0)`);
 
   return (
-    <div ref={containerRef} className="relative font-sans text-base sm:text-lg leading-relaxed font-normal">
+    <div ref={containerRef} className="relative font-sans text-base sm:text-lg leading-relaxed font-normal selection:bg-sky-500/30 selection:text-white">
       {/* Dim Unread Text */}
-      <p className="text-slate-500/70">
+      <p className="text-slate-400/80 font-normal">
         {text}
       </p>
       {/* Bright White Read Text revealed via GPU clip-path */}
       <motion.p
         style={{ clipPath }}
-        className="absolute inset-0 text-white font-medium select-none pointer-events-none drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+        className="absolute inset-0 text-white font-normal select-none pointer-events-none"
       >
         {text}
       </motion.p>
