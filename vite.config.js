@@ -10,8 +10,11 @@ function apiDevPlugin() {
       server.middlewares.use('/api/chat', async (req, res) => {
         // Load environment variables from .env / .env.local in project root
         const env = loadEnv(server.config.mode || 'development', process.cwd(), '');
-        process.env.XAI_API_KEY = process.env.XAI_API_KEY || env.XAI_API_KEY || env.GROQ_API_KEY;
-        process.env.GROQ_API_KEY = process.env.GROQ_API_KEY || env.GROQ_API_KEY || env.XAI_API_KEY;
+        process.env.GROQ_API_KEY_1 = process.env.GROQ_API_KEY_1 || env.GROQ_API_KEY_1 || '';
+        process.env.GROQ_API_KEY_2 = process.env.GROQ_API_KEY_2 || env.GROQ_API_KEY_2 || '';
+        process.env.GROQ_API_KEY_3 = process.env.GROQ_API_KEY_3 || env.GROQ_API_KEY_3 || '';
+        process.env.GROQ_API_KEY = process.env.GROQ_API_KEY || env.GROQ_API_KEY || env.XAI_API_KEY || '';
+        process.env.XAI_API_KEY = process.env.XAI_API_KEY || env.XAI_API_KEY || env.GROQ_API_KEY || '';
 
         if (req.method === 'OPTIONS') {
           res.statusCode = 200;

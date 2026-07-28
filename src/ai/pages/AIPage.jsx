@@ -171,6 +171,8 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
     };
   }, []);
 
+  const mainContainerRef = useRef(null);
+
   return (
     <div
       className="fixed inset-0 z-[120] bg-[#040814] text-white flex flex-col justify-between overflow-hidden text-left font-sans w-screen"
@@ -227,6 +229,7 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
 
       {/* MAIN CHAT CONVERSATION VIEWPORT (SCROLLABLE CONTAINER) */}
       <main
+        ref={mainContainerRef}
         data-lenis-prevent
         className="relative z-10 flex-1 overflow-y-auto min-h-0 p-4 sm:p-8 max-w-4xl w-full mx-auto space-y-8 scrollbar-thin touch-pan-y overscroll-contain"
       >
@@ -272,6 +275,7 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
             messages={messages}
             isThinking={isThinking}
             onTriggerAction={handleActionTrigger}
+            containerRef={mainContainerRef}
           />
         )}
 
