@@ -31,6 +31,7 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
   const [isThinking, setIsThinking] = useState(false);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
 
+  const [viewportHeight, setViewportHeight] = useState(null);
   const inputRef = useRef(null);
 
   // Rotate input placeholder
@@ -44,6 +45,25 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
   // Auto focus input on mount
   useEffect(() => {
     inputRef.current?.focus();
+  }, []);
+
+  // Handle dynamic visualViewport resizing on mobile (e.g. soft keyboard open/close)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.visualViewport) return;
+
+    const handleResize = () => {
+      setViewportHeight(window.visualViewport.height);
+    };
+
+    handleResize();
+
+    window.visualViewport.addEventListener('resize', handleResize);
+    window.visualViewport.addEventListener('scroll', handleResize);
+
+    return () => {
+      window.visualViewport.removeEventListener('resize', handleResize);
+      window.visualViewport.removeEventListener('scroll', handleResize);
+    };
   }, []);
 
   const handleSend = async (queryText) => {
@@ -149,7 +169,10 @@ export default function AIPage({ onClose, onTriggerOSAction }) {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[120] bg-[#040814] text-white flex flex-col justify-between overflow-hidden text-left font-sans h-screen w-screen">
+    <div
+      className="fixed inset-0 z-[120] bg-[#040814] text-white flex flex-col justify-between overflow-hidden text-left font-sans w-screen"
+      style={{ height: viewportHeight ? `${viewportHeight}px` : '100dvh' }}
+    >
       {/* Volumetric Ambient Lighting */}
       <div className="absolute top-1/6 left-1/4 w-[600px] h-[600px] rounded-full bg-sky-500/10 blur-[180px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[180px] pointer-events-none" />
