@@ -147,7 +147,7 @@ const PORTFOLIO_PROFILE = {
   linkedin: "https://www.linkedin.com/in/saquib-sarfaraz-1691b9292/",
   instagram: "https://www.instagram.com/saquib.sarfaraz?igsh=MTB0ZWdlbWZnMTQ1dA==",
   website: "https://saquib-sarfaraz.vercel.app",
-  resume: "/saquib-cv.pdf",
+  resume: "/Saquib_Sarfaraz_FullStack_Resume.pdf",
   currentInternship: "Full Stack Developer Intern at WonderKids Club (June 2026 – August 2026)",
   flagshipSaaS: "InCampus (https://incampus.online)",
   aiSaaS: "AI Spend Audit (https://ai-audit-lilac.vercel.app)"

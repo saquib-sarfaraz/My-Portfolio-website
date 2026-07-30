@@ -71,7 +71,7 @@ export default function AIActions({ actions = [], onTriggerAction }) {
           return (
             <a
               key={idx}
-              href={act.url || '/saquib-cv.pdf'}
+              href={act.url || '/Saquib_Sarfaraz_FullStack_Resume.pdf'}
               target="_blank"
               rel="noreferrer"
               className="px-3 py-1.5 rounded-xl bg-indigo-500/15 border border-indigo-400/30 text-indigo-300 hover:text-white hover:bg-indigo-500/30 transition-all font-mono text-xs font-semibold flex items-center gap-1.5 shadow-sm"

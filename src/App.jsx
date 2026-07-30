@@ -90,7 +90,7 @@ export default function App() {
         }
       }, 150);
     } else if (action.type === 'resume') {
-      window.open(action.url || '/saquib-cv.pdf', '_blank');
+      window.open(action.url || '/Saquib_Sarfaraz_FullStack_Resume.pdf', '_blank');
     } else if (action.type === 'live' || action.type === 'github' || action.type === 'external') {
       if (action.url) {
         window.open(action.url, '_blank');

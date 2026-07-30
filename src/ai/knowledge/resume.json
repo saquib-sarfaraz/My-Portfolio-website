@@ -11,8 +11,8 @@
   ],
   "topSkills": ["React.js", "Node.js", "Express.js", "MongoDB Atlas", "Socket.io", "Tailwind CSS", "PHP", "Python", "Git"],
   "flagshipProject": "InCampus (Live University Social Network)",
-  "resumeUrl": "/saquib-cv.pdf",
+  "resumeUrl": "/Saquib_Sarfaraz_FullStack_Resume.pdf",
   "actions": [
-    { "type": "resume", "url": "/saquib-cv.pdf", "label": "Download Full Resume PDF" }
+    { "type": "resume", "url": "/Saquib_Sarfaraz_FullStack_Resume.pdf", "label": "Download Full Resume PDF" }
   ]
 }
