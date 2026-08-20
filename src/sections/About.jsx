@@ -21,7 +21,7 @@ export default function About() {
 
                 <img
                   src={profilePic}
-                  alt="Saquib"
+                  alt="Saquib Sarfaraz - Full Stack Developer"
                   className="w-full h-full rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500 border-4 border-[#1a1c25]"
                 />
 

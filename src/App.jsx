@@ -32,27 +32,31 @@ export default function App() {
 
   // Sync /ai route with state cleanly without hash tags
   useEffect(() => {
-    const handlePopState = () => {
-      setIsAISearchOpen(window.location.pathname === '/ai');
+    const syncRouteAndTitle = () => {
+      const isAI = window.location.pathname === '/ai';
+      setIsAISearchOpen(isAI);
+      document.title = isAI
+        ? 'AI Search Workspace | Saquib Sarfaraz'
+        : 'Saquib Sarfaraz | Full Stack Developer';
     };
 
-    if (window.location.pathname === '/ai') {
-      setIsAISearchOpen(true);
-    }
+    syncRouteAndTitle();
 
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('popstate', syncRouteAndTitle);
+    return () => window.removeEventListener('popstate', syncRouteAndTitle);
   }, []);
 
   const openAISearch = () => {
     setIsAISearchOpen(true);
-    window.history.pushState({ page: 'ai' }, 'AI Search — Saquib OS', '/ai');
+    document.title = 'AI Search Workspace | Saquib Sarfaraz';
+    window.history.pushState({ page: 'ai' }, 'AI Search Workspace | Saquib Sarfaraz', '/ai');
   };
 
   const closeAISearch = () => {
     setIsAISearchOpen(false);
+    document.title = 'Saquib Sarfaraz | Full Stack Developer';
     if (window.location.pathname === '/ai') {
-      window.history.pushState({ page: 'home' }, 'Saquib OS', '/');
+      window.history.pushState({ page: 'home' }, 'Saquib Sarfaraz | Full Stack Developer', '/');
     }
   };
 
